@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor folders
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Design source files — keep out of git, these bloat repo history permanently.
+# Store these separately (Drive/Dropbox), not in the repo.
+model/
+*.psd
+*.ai
+*.xd
+*.fig
+*.sketch
+
+# Logs
+*.log
+
+# Env files (relevant once a contact form backend/API key is added)
+.env
+.env.local
+
+# In case Node tooling gets added later
+node_modules/
+dist/
+.vite/

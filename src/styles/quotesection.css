@@ -1,0 +1,164 @@
+.quote-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: auto;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ===================== */
+/* QUOTE HERO */
+/* ===================== */
+
+.quote-hero {
+  padding-top: 10vw;
+}
+
+.quote-label {
+  position: absolute;
+  top: clamp(24px, 4vw, 48px);
+  right: clamp(20px, 4vw, 60px);
+
+  font-family: "Michroma", sans-serif;
+  font-size: clamp(0.6rem, 0.8vw, 0.85rem);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-align: right;
+  color: #1e3aff;
+}
+
+.quote-hero-content {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quote-heading-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 36px);
+  margin-bottom: clamp(10px, 1.8vw, 28px);
+}
+
+.quote-heading-main {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.8rem, 8vw, 7rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: #1e3aff;
+}
+
+.quote-cow-group {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 0.8vw, 14px);
+}
+
+.quote-arrow {
+  font-family: "Silkscreen", sans-serif;
+  font-size: clamp(1rem, 2vw, 2rem);
+  color: #04e4fe;
+}
+
+.quote-cow {
+  width: clamp(46px, 8vw, 100px);
+  image-rendering: pixelated;
+}
+
+.quote-subheading-row {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(24px, 5vw, 70px);
+  padding-left: clamp(40px, 12vw, 190px);
+}
+
+.quote-intro-copy {
+  margin: 0;
+  max-width: clamp(180px, 20vw, 300px);
+
+  font-family: "Michroma", sans-serif;
+  font-size: clamp(0.65rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: #333;
+}
+
+.quote-big-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+}
+
+.quote-big-text span {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.8rem, 8vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+
+  background: linear-gradient(to bottom, #1a2fff 0%, #0010cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===================== */
+/* QUOTE ABOUT */
+/* ===================== */
+
+.quote-about {
+  width: 100%;
+  margin-top: clamp(48px, 7vh, 100px);
+}
+
+.quote-about-image-block {
+  margin-top: 100px;
+}
+
+.quote-about-image {
+  display: block;
+  width: clamp(280px, 50vw, 590px);
+}
+
+.quote-about-content {
+  display: flex;
+  width: 60%;
+  margin-left: 28%;
+  margin-bottom: 80px;
+}
+
+.quote-about-tail img {
+  width: clamp(30px, 12vw, 100px);
+}
+
+.quote-about-text {
+  margin-top: 100px;
+}
+
+.quote-about-copy {
+  margin: 0;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1rem, 1.5vw, 2rem);
+  line-height: 1.7;
+  color: #111;
+}
+
+.quote-about-copy strong {
+  font-family: "Silkscreen", monospace;
+  color: #1e3aff;
+}
+
+.quote-about-tagline {
+  margin: 0;
+
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.8rem);
+  color: #1a2fff;
+}

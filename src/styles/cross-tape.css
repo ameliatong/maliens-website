@@ -1,0 +1,79 @@
+.marquee-section {
+  position: relative;
+  transform: translateY(-1px);
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #efefff 45%,
+    #8f90ff 100%
+  );
+}
+
+.tape {
+  position: absolute;
+  left: -30%;
+  width: 160%;
+  height: 54px;
+  background: #ffffff;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+}
+
+.tape-1 {
+  top: 95px;
+  transform: rotate(-6deg);
+  z-index: 2;
+}
+
+.tape-2 {
+  top: 150px;
+  transform: rotate(6deg);
+  z-index: 1;
+}
+
+.tape-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeMove 14s linear infinite;
+  will-change: transform;
+}
+
+.tape-track.reverse {
+  animation-direction: reverse;
+}
+
+.tape-group {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-right: 32px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.tape-group span {
+  font-family: "Michroma", sans-serif;
+  font-size: 22px;
+  color: #0017c9;
+  letter-spacing: 0.04em;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 26px !important;
+}
+
+@keyframes marqueeMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-25%);
+  }
+}
