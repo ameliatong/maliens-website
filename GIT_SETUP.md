@@ -1,8 +1,7 @@
 # Git & GitHub Setup Guide
 
 Step-by-step instructions for getting this project onto your machine, making
-changes, and pushing them back to GitHub. Written for zero prior Git
-experience — if you've never used Git before, start from the top.
+changes, and pushing them back to GitHub. 
 
 ---
 
@@ -166,45 +165,33 @@ git remote add origin https://github.com/USERNAME/maliens-website.git
 git push -u origin main
 ```
 
-If `git push` fails with `src refspec main does not match any`, you skipped
-`git commit` — run it before pushing again.
-
-If `git push` fails with `Repository not found`, this is almost always a
-**login mismatch**, not a missing repo. Run `git remote -v` to check the
-exact URL Git is using, and confirm you're logged into the same GitHub
-account in your browser that owns that repo. GitHub shows "not found"
-instead of "access denied" even when the real problem is permissions.
-
 ---
 
-## 3. Open the project correctly in VS Code
-
-⚠️ This is the most common mistake: opening a single file (`index.html`)
-instead of the whole project folder. Git tools in VS Code only work when
-the *folder* is open.
-
-1. Open VS Code
-2. **File → Open Folder** (not "Open File")
-3. Select the `maliens-website` folder — the one containing `index.html`
-   directly inside it, not a folder above or below
-4. If it worked, the Source Control icon in the left sidebar (branching
-   line icon) will show file changes as soon as you edit something
-5. If VS Code says "this folder is not a Git repository," you've opened
-   the wrong level — go up or down a folder and try again
-
----
-
-## 4. The daily loop: editing and pushing changes
+## 3. The daily loop: editing and pushing changes
 
 Every time you make changes and want to save them to GitHub, it's the same
 three steps. Pick whichever method you prefer — both do exactly the same
 thing.
 
-### Option A — Terminal
+Always write commit messages in this format:
+
+**`[Your Name] - what you changed`**
+
+### Option A — VS Code Source Control panel USE THISSSSSS METHOD
+
+1. Make sure you have the **folder** open, not just a file
+2. Click the Source Control icon in the left sidebar (branching line)
+3. You'll see a list of all changed files — review them
+4. Type a commit message in the text box at the top
+5. Click the checkmark **✓** or press `Ctrl+Enter` to commit
+6. Click the **sync/push** icon (circular arrows in the bottom-left status
+   bar, next to the branch name) to push to GitHub
+
+### Option B — Terminal
 
 ```bash
 git add .
-git commit -m "describe what you changed"
+git commit -m "Amelia - what you changed"
 git push
 ```
 
@@ -218,65 +205,19 @@ You only need `-u origin main` the very first time you push a brand new
 repo (Section 2). After that, plain `git push` remembers where to send
 things.
 
-### Option B — VS Code Source Control panel
-
-1. Make sure you have the **folder** open (Section 3), not just a file
-2. Click the Source Control icon in the left sidebar (branching line)
-3. You'll see a list of all changed files — review them
-4. Type a commit message in the text box at the top
-5. Click the checkmark **✓** or press `Ctrl+Enter` to commit
-6. Click the **sync/push** icon (circular arrows in the bottom-left status
-   bar, next to the branch name) to push to GitHub
-
 ---
 
-## 5. Before you commit — quick sanity check
 
-Run this any time before staging to see exactly what's changed:
+## 4 Pulling latest changes before you start work
 
-```bash
-git status
-```
-
-Lists modified, new, and deleted files without committing anything — safe
-to run as many times as you like.
-
----
-
-## 6. Common errors and what they actually mean
-
-| Error message | What's really happening | Fix |
-|---|---|---|
-| `src refspec main does not match any` | Pushed before committing — `main` branch doesn't exist yet | Run `git commit -m "..."` first |
-| `Repository not found` | Login/account mismatch, not a missing repo | Run `git remote -v`, confirm URL, confirm you're logged into the matching GitHub account |
-| `Updates were rejected` | Remote has commits your local copy doesn't have | Run `git pull --rebase origin main` then `git push` |
-| `LF will be replaced by CRLF` | Informational only — Git normalizing Windows line endings | Ignore it, not an error |
-| VS Code: "not a Git repository" | Wrong folder opened, or single file opened instead of folder | File → Open Folder → select the correct project folder |
-| Git rejects password | GitHub no longer accepts plain passwords for pushes | Generate a Personal Access Token (GitHub → Settings → Developer settings → Personal access tokens → Tokens classic) and use that as the password |
-
----
-
-## 7. Don't commit directly to `main` for new features
-
-Once more than one person is working in the repo, create a branch for
-every new feature or section you're working on:
+Before you begin editing anything, always pull the latest version from
+GitHub first — especially if teammates have been working:
 
 ```bash
-git checkout -b yourname/feature-name
+git pull origin main
 ```
 
-For example:
-```bash
-git checkout -b alicia/contact-form
-```
-
-Push your branch to GitHub:
-```bash
-git push -u origin yourname/feature-name
-```
-
-Then open a **Pull Request** on GitHub — go to the repo page, you'll see
-a prompt to compare and open a PR. Once reviewed, merge it into `main`.
-
-This keeps half-finished work off `main` and prevents one person's changes
-from accidentally breaking the other's section.
+This downloads everyone's latest commits into your local copy. If you skip
+this and push without pulling, Git may reject your push because your local
+copy is behind. If that happens, run `git pull origin main` then `git push`
+again.
