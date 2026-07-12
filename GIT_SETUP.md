@@ -123,8 +123,12 @@ UI walkthrough.
 ---
 
 ### Method D — VS Code Clone (no terminal)
+MAKE SURE you Sign into GitHub in VS Code first! how? :
 
-If you already use VS Code, you can clone directly from inside it.
+Click the Accounts icon in the bottom-left of VS Code (looks like a person silhouette)
+Click Sign in with GitHub
+
+Then: 
 
 1. Open VS Code with no folder open
 2. You'll see a **Clone Repository** button in the Explorer panel — click it
