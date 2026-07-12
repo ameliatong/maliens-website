@@ -1,6 +1,7 @@
 export function initHeader() {
   const header = document.getElementById("siteHeader");
   const ufo = document.getElementById("ufoIcon");
+  const navLinks = document.querySelectorAll(".header-bar a");
 
   if (!header || !ufo) return;
 
@@ -24,6 +25,20 @@ export function initHeader() {
     } else {
       closeHeader();
     }
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const targetId = link.getAttribute("href").replace("#", "");
+
+      if (window.maliensGoToSection) {
+        window.maliensGoToSection(targetId);
+      }
+
+      closeHeader();
+    });
   });
 
   window.addEventListener(
