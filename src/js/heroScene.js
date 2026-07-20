@@ -14,6 +14,7 @@ export function initHeroScene() {
   let lastTime = performance.now();
   let updateGame = function () {};
   let drawGame = function () {};
+  let touchMoveDirection = 0;
 
   // =====================
   // BACKGROUND IMAGE
@@ -247,8 +248,9 @@ export function initHeroScene() {
   const initialCameraPosition = new THREE.Vector3();
   const initialTargetPosition = new THREE.Vector3();
 
-  const zoomCameraPosition = new THREE.Vector3();
-  const zoomLookAtPosition = new THREE.Vector3();
+  // Safe default positions, available before the GLB finishes loading
+  const zoomCameraPosition = new THREE.Vector3(0, 2, 5);
+  const zoomLookAtPosition = new THREE.Vector3(0, 1, 0);
 
   const animationStartCamera = new THREE.Vector3();
   const animationStartTarget = new THREE.Vector3();
@@ -778,7 +780,6 @@ export function initHeroScene() {
 
       const keys = {};
 
-      let touchMoveDirection = 0; // -1 left, 1 right, 0 stop
       let gameState = "start"; // start, playing, gameover
       let score = 0;
 
@@ -1211,7 +1212,11 @@ export function initHeroScene() {
   window.addEventListener(
     "wheel",
     (event) => {
-      if (!mainScreen || isZooming) return;
+      // Only block scrolling while the camera is already animating
+      if (isZooming) {
+        event.preventDefault();
+        return;
+      }
 
       if (isInside && scrollModeEnabled) {
         event.preventDefault();

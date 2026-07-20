@@ -1,7 +1,11 @@
 export function initHeader() {
   const header = document.getElementById("siteHeader");
   const ufo = document.getElementById("ufoIcon");
-  const navLinks = document.querySelectorAll(".header-bar a");
+
+  // Include header, mobile and footer navigation
+  const navLinks = document.querySelectorAll(
+    ".header-bar a, .mobile-links a, .footer-nav a, .footer-cta-btn",
+  );
 
   if (!header || !ufo) return;
 
@@ -31,10 +35,16 @@ export function initHeader() {
     link.addEventListener("click", (event) => {
       event.preventDefault();
 
-      const targetId = link.getAttribute("href").replace("#", "");
+      const href = link.getAttribute("href");
+
+      if (!href || !href.startsWith("#")) return;
+
+      const targetId = href.replace("#", "");
 
       if (window.maliensGoToSection) {
         window.maliensGoToSection(targetId);
+      } else {
+        console.warn("maliensGoToSection is not available.");
       }
 
       closeHeader();
