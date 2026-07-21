@@ -1,15 +1,18 @@
 .marquee-section {
   position: relative;
-  transform: translateY(-1px);
+
   width: 100%;
   height: 320px;
+
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #efefff 45%,
-    #8f90ff 100%
-  );
+
+  /*
+    Pull the next section slightly upward to remove
+    sub-pixel lines between fixed/transformed sections.
+  */
+  margin-bottom: -3px;
+
+  background: linear-gradient(180deg, #ffffff 0%, #efefff 45%, #8f90ff 100%);
 }
 
 .tape {
