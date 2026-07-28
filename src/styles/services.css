@@ -9,7 +9,7 @@
   height: 120vh;
   min-height: 900px;
 
-  margin-top: 0;
+  margin-top: 2px;
 
   overflow: hidden;
 
@@ -52,7 +52,7 @@
 .services-top-labels {
   position: absolute;
 
-  top: clamp(110px, 15vh, 170px);
+  top: clamp(40px, 8vh, 90px);
   left: 0;
 
   width: 100%;
@@ -199,30 +199,6 @@
   letter-spacing: 0.09em;
 
   color: #04e4fe;
-}
-
-/* ========================================================= */
-/* BOTTOM KICKER */
-/* ========================================================= */
-
-.services-kicker {
-  position: absolute;
-  left: 50%;
-  bottom: 32px;
-
-  transform: translateX(-50%);
-
-  z-index: 5;
-
-  margin: 0;
-
-  font-family: "Silkscreen", monospace;
-  font-size: clamp(9px, 0.75vw, 13px);
-  letter-spacing: 0.28em;
-
-  color: #ffffff;
-
-  pointer-events: none;
 }
 
 /* ========================================================= */
