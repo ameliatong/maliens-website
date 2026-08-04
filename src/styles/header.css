@@ -99,25 +99,304 @@
   opacity: 0;
 }
 
-/* ===================== */
-/* HEADER RESPONSIVE */
-/* ===================== */
+/* ================================================== */
+/* TABLET + MOBILE HEADER */
+/* ================================================== */
 
-@media (max-width: 768px) {
+.mobile-header {
+  display: none;
+}
+
+/* Tablet and mobile */
+@media (max-width: 1024px) {
+  /* Hide desktop header */
   .site-header {
-    left: 12px;
+    display: none;
   }
 
-  .ufo-icon {
-    width: 72px;
+  /* Show mobile/tablet header */
+  .mobile-header {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
   }
 
-  .header-bar {
-    width: calc(100vw - 70px);
-    margin-left: -32px;
+  /* ===================== */
+  /* UFO BUTTON */
+  /* ===================== */
+
+  .mobile-ufo-button {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    z-index: 10003;
+
+    width: 120px;
+    height: 75px;
+
+    padding: 0;
+    border: 0;
+    background: transparent;
+
+    transform: translateX(-50%);
+
+    cursor: pointer;
+    pointer-events: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .header-bar a {
-    font-size: 0.65rem;
+  .mobile-ufo-icon {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    transform: rotate(0deg);
+    transition:
+      transform 0.45s ease,
+      filter 0.45s ease;
   }
+
+  .mobile-ufo-icon {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    /* UFO always stays in its original direction */
+    transform: none;
+    filter: none;
+
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ===================== */
+  /* FULL-SCREEN OVERLAY */
+  /* ===================== */
+
+  .mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+
+    width: 100%;
+    height: 100dvh;
+
+    overflow: hidden;
+    pointer-events: none;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      opacity 0.4s ease,
+      visibility 0s linear 0.4s;
+  }
+
+  .mobile-header.menu-open .mobile-menu-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transition:
+      opacity 0.4s ease,
+      visibility 0s linear 0s;
+  }
+
+  /* ===================== */
+  /* BACKGROUND IMAGE */
+  /* ===================== */
+
+  .mobile-menu-background {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+
+    transform: scale(1.03);
+    transition: transform 0.8s ease;
+  }
+
+  .mobile-header.menu-open .mobile-menu-background {
+    transform: scale(1);
+  }
+
+  /* ===================== */
+  /* UFO LIGHT */
+  /* ===================== */
+
+  .mobile-ufo-light {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    z-index: 2;
+
+    width: min(48vw, 500px);
+    height: calc(100dvh - 90px);
+
+    object-fit: fill;
+    object-position: top center;
+
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: top center;
+
+    opacity: 0;
+
+    /* Keep the original white PNG and blend it */
+    mix-blend-mode: overlay;
+
+    pointer-events: none;
+    user-select: none;
+
+    transition:
+      transform 0.55s ease 0.1s,
+      opacity 0.35s ease 0.1s;
+  }
+
+  .mobile-header.menu-open .mobile-ufo-light {
+    transform: translateX(-50%) scaleY(1);
+    opacity: 0.48;
+  }
+
+  /* ===================== */
+  /* MENU LINKS */
+  /* ===================== */
+
+  .mobile-menu-nav {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    z-index: 3;
+
+    width: min(86vw, 500px);
+
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(42px, 7vh, 75px);
+  }
+
+  .mobile-menu-nav a {
+    color: #ffffff;
+    text-decoration: none;
+
+    font-family: "Michroma", sans-serif;
+
+    /* Smaller responsive navigation text */
+    font-size: clamp(0.78rem, 2.2vw, 1.05rem);
+
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+
+    /* Remove all glow and shadow */
+    text-shadow: none;
+    filter: none;
+
+    opacity: 0;
+    transform: translateY(18px);
+
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+  }
+
+  .mobile-header.menu-open .mobile-menu-nav a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-header.menu-open .mobile-menu-nav a:nth-child(1) {
+    transition-delay: 0.2s;
+  }
+
+  .mobile-header.menu-open .mobile-menu-nav a:nth-child(2) {
+    transition-delay: 0.28s;
+  }
+
+  .mobile-header.menu-open .mobile-menu-nav a:nth-child(3) {
+    transition-delay: 0.36s;
+  }
+
+  .mobile-header.menu-open .mobile-menu-nav a:nth-child(4) {
+    transition-delay: 0.44s;
+  }
+
+  .mobile-menu-nav a:hover,
+  .mobile-menu-nav a:focus-visible {
+    text-shadow: none;
+    opacity: 0.72;
+  }
+}
+
+/* ================================================== */
+/* MOBILE-SPECIFIC ADJUSTMENTS */
+/* ================================================== */
+
+@media (max-width: 600px) {
+  .mobile-ufo-button {
+    top: 18px;
+    width: 92px;
+    height: 58px;
+    z-index: 10003;
+  }
+
+  .mobile-ufo-light {
+    top: 70px;
+
+    width: min(55vw, 300px);
+    height: calc(100dvh - 70px);
+
+    object-fit: fill;
+    object-position: top center;
+  }
+
+  .mobile-menu-nav {
+    top: 47%;
+    gap: clamp(38px, 6.5vh, 56px);
+  }
+
+  .mobile-menu-nav a {
+    font-size: clamp(0.74rem, 3.8vw, 0.95rem);
+  }
+}
+
+/* Very small mobile screens */
+@media (max-width: 380px) {
+  .mobile-ufo-button {
+    width: 88px;
+  }
+
+  .mobile-ufo-light {
+    width: 90vw;
+  }
+
+  .mobile-menu-nav {
+    gap: 44px;
+  }
+
+  .mobile-menu-nav a {
+    font-size: 0.9rem;
+  }
+}
+
+/* Prevent background page scrolling while mobile menu is open */
+body.mobile-menu-active {
+  overflow: hidden;
+  height: 100dvh;
+  touch-action: none;
 }
