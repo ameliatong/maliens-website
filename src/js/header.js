@@ -4,7 +4,7 @@ export function initHeader() {
 
   // Include header, mobile and footer navigation
   const navLinks = document.querySelectorAll(
-    ".header-bar a, .mobile-links a, .footer-nav a, .footer-cta-btn",
+    ".header-bar a, .footer-nav a, .footer-cta-btn",
   );
 
   if (!header || !ufo) return;
@@ -121,8 +121,24 @@ if (mobileUfoButton) {
 
 // Close menu after clicking HOME, ABOUT, SERVICES or CONTACT
 mobileMenuLinks.forEach((link) => {
-  link.addEventListener("click", () => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const href = link.getAttribute("href");
+
+    if (!href || !href.startsWith("#")) return;
+
+    const targetId = href.substring(1);
+
     closeMobileMenu();
+
+    if (window.maliensGoToSection) {
+      window.maliensGoToSection(targetId);
+    } else {
+      document.getElementById(targetId)?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
   });
 });
 
