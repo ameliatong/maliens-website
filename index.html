@@ -32,6 +32,9 @@
     </section>
 
     <!-- HEADER -->
+    <!-- ========================= -->
+    <!-- DESKTOP HEADER -->
+    <!-- ========================= -->
     <header id="siteHeader" class="site-header expanded">
       <div class="ufo-wrap">
         <img
@@ -48,6 +51,52 @@
         <a href="#services">{ SERVICES }</a>
         <a href="#contact">{ CONTACT }</a>
       </nav>
+    </header>
+
+    <!-- ========================= -->
+    <!-- TABLET + MOBILE HEADER -->
+    <!-- ========================= -->
+    <header class="mobile-header" id="mobileHeader">
+      <!-- UFO BUTTON -->
+      <button
+        class="mobile-ufo-button"
+        id="mobileUfoButton"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="mobileMenuOverlay"
+      >
+        <img src="image/ufo-header.png" alt="" class="mobile-ufo-icon" />
+      </button>
+
+      <!-- FULL-SCREEN MENU -->
+      <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+        aria-hidden="true"
+      >
+        <!-- BLUE BACKGROUND -->
+        <img
+          src="image/header-mobile-bg.png"
+          alt=""
+          class="mobile-menu-background"
+        />
+
+        <!-- UFO LIGHT -->
+        <img
+          src="image/header-mobile-light.png"
+          alt=""
+          class="mobile-ufo-light"
+        />
+
+        <!-- NAVIGATION -->
+        <nav class="mobile-menu-nav" aria-label="Mobile navigation">
+          <a href="#home">{ HOME }</a>
+          <a href="#about">{ ABOUT }</a>
+          <a href="#services">{ SERVICES }</a>
+          <a href="#contact">{ CONTACT }</a>
+        </nav>
+      </div>
     </header>
 
     <!-- HERO TEXT -->
