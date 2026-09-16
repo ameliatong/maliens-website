@@ -1,5 +1,6 @@
 import * as THREE from "https://esm.sh/three@0.160.0";
 import { GLTFLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/DRACOLoader.js";
 import { OrbitControls } from "https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js";
 import { sharedLoadingManager } from "./loadingManager.js";
 
@@ -800,7 +801,13 @@ export function initServicesScene() {
   // =========================================================
   // LOAD MODEL
   // =========================================================
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath(
+    "https://www.gstatic.com/draco/versioned/decoders/1.5.6/",
+  );
+
   const loader = new GLTFLoader(sharedLoadingManager);
+  loader.setDRACOLoader(dracoLoader);
 
   loader.load(
     "model/tiang4.glb",
