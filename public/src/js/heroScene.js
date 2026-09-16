@@ -1323,8 +1323,6 @@ export function initHeroScene() {
       gameTexture.flipY = false;
       gameTexture.minFilter = THREE.NearestFilter;
       gameTexture.magFilter = THREE.NearestFilter;
-      gameTexture.center.set(0.5, 0.5);
-      gameTexture.rotation = Math.PI; // 180°
 
       const gameAssets = {
         bg: new Image(),
