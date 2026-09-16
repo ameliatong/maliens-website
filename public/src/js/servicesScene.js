@@ -1222,9 +1222,11 @@ export function initServicesScene() {
     return THREE.MathUtils.clamp(visible / viewportHeight, 0, 1);
   }
 
-  window.addEventListener(
-    "wheel",
-    (event) => {
+  // Named (rather than inline) so the touch handlers below can feed it
+  // synthetic "wheel-shaped" events too — phones never fire wheel events on
+  // a swipe, so without this the focused service-board stepping below is
+  // completely inert on touch devices.
+  function handleServicesScrollGesture(event) {
       if (!isServicesVisible()) return;
 
       if (!model) return;
@@ -1438,11 +1440,58 @@ export function initServicesScene() {
 
         focusBoard(focusedIndex - 1);
       }
+  }
+
+  window.addEventListener("wheel", handleServicesScrollGesture, {
+    passive: false,
+    capture: true,
+  });
+
+  // =========================================================
+  // TOUCH CONTROL (mobile equivalent of the wheel control above)
+  // =========================================================
+  // Translates a vertical swipe into the same deltaY-shaped events
+  // handleServicesScrollGesture already knows how to interpret, reusing
+  // all of its focus/step logic untouched.
+  const SERVICES_TOUCH_SCROLL_GAIN = 2.2; // swipes are short — amplify to match a wheel flick's reach
+  let lastServicesTouchY = null;
+
+  window.addEventListener(
+    "touchstart",
+    (event) => {
+      if (event.touches.length !== 1) return;
+      lastServicesTouchY = event.touches[0].clientY;
     },
-    {
-      passive: false,
-      capture: true,
+    { passive: true, capture: true },
+  );
+
+  window.addEventListener(
+    "touchmove",
+    (event) => {
+      if (lastServicesTouchY === null || event.touches.length !== 1) return;
+
+      const currentY = event.touches[0].clientY;
+      const deltaY =
+        (lastServicesTouchY - currentY) * SERVICES_TOUCH_SCROLL_GAIN;
+      lastServicesTouchY = currentY;
+
+      if (deltaY === 0) return;
+
+      handleServicesScrollGesture({
+        deltaY,
+        preventDefault: () => event.preventDefault(),
+        stopImmediatePropagation: () => event.stopImmediatePropagation(),
+      });
     },
+    { passive: false, capture: true },
+  );
+
+  window.addEventListener(
+    "touchend",
+    () => {
+      lastServicesTouchY = null;
+    },
+    { passive: true, capture: true },
   );
 
   // =========================================================

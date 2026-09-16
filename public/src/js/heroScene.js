@@ -1876,9 +1876,11 @@ export function initHeroScene() {
   // =====================
   // Wheel Trigger
   // =====================
-  window.addEventListener(
-    "wheel",
-    (event) => {
+  // Named (rather than inline) so the touch handlers below can feed it
+  // synthetic "wheel-shaped" events too — real phones never fire wheel
+  // events on a swipe, so without this the whole scroll experience (which
+  // is 100% wheel-driven) is completely inert on touch devices.
+  function handleScrollGesture(event) {
       // Only block scrolling while the camera is already animating
       if (isZooming) {
         event.preventDefault();
@@ -2054,8 +2056,53 @@ export function initHeroScene() {
 
         return;
       }
+  }
+
+  window.addEventListener("wheel", handleScrollGesture, { passive: false });
+
+  // =====================
+  // Touch Trigger (mobile equivalent of the wheel trigger above)
+  // =====================
+  // Translates a vertical swipe into the same deltaY-shaped events
+  // handleScrollGesture already knows how to interpret, reusing all of its
+  // gate/snap/free-scroll logic untouched.
+  const TOUCH_SCROLL_GAIN = 2.2; // swipes are short — amplify to match a wheel flick's reach
+  let lastTouchY = null;
+
+  window.addEventListener(
+    "touchstart",
+    (event) => {
+      if (event.touches.length !== 1) return;
+      lastTouchY = event.touches[0].clientY;
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "touchmove",
+    (event) => {
+      if (lastTouchY === null || event.touches.length !== 1) return;
+
+      const currentY = event.touches[0].clientY;
+      const deltaY = (lastTouchY - currentY) * TOUCH_SCROLL_GAIN; // finger up = scroll down, same sign as wheel deltaY
+      lastTouchY = currentY;
+
+      if (deltaY === 0) return;
+
+      handleScrollGesture({
+        deltaY,
+        preventDefault: () => event.preventDefault(),
+      });
     },
     { passive: false },
+  );
+
+  window.addEventListener(
+    "touchend",
+    () => {
+      lastTouchY = null;
+    },
+    { passive: true },
   );
 
   // pointer for game
