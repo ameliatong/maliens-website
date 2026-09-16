@@ -24,7 +24,7 @@ app.use(express.static("public"));
 
 const contactLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
-  limit: 5,
+  limit: 20,
   message: {
     message: "Too many submissions. Please try again later.",
   },
