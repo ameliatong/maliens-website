@@ -809,7 +809,18 @@ export function initServicesScene() {
   const loader = new GLTFLoader(sharedLoadingManager);
   loader.setDRACOLoader(dracoLoader);
 
-  loader.load(
+  // tiang4.glb is a large download (tens of MB) — starting it immediately
+  // on page load, alongside the hero's own large model, was pushing
+  // combined memory/bandwidth use past what many phones can handle and
+  // hurting initial page-load speed for everyone. Deferred below to start
+  // once the section is actually getting close instead.
+  let modelLoadStarted = false;
+
+  function loadServicesModel() {
+    if (modelLoadStarted) return;
+    modelLoadStarted = true;
+
+    loader.load(
     "model/tiang4.glb",
 
     (gltf) => {
@@ -1016,7 +1027,28 @@ export function initServicesScene() {
     (error) => {
       console.error("tiang4.glb load error:", error);
     },
-  );
+    );
+  }
+
+  // Give the download a head start before the user actually reaches the
+  // section — same rAF-poll-against-getBoundingClientRect pattern used
+  // elsewhere on this page (IntersectionObserver isn't reliable against
+  // this page's transformed virtual scroller).
+  const LOAD_TRIGGER_VH_MARGIN = 1.5;
+
+  function watchForLoadTrigger() {
+    if (modelLoadStarted) return;
+
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight * (1 + LOAD_TRIGGER_VH_MARGIN)) {
+      loadServicesModel();
+      return;
+    }
+
+    requestAnimationFrame(watchForLoadTrigger);
+  }
+
+  requestAnimationFrame(watchForLoadTrigger);
 
   // =========================================================
   // SERVICES ENTRY STATE

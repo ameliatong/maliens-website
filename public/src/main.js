@@ -7,7 +7,7 @@ import { initNextScene } from "./js/nextsectionLogo.js";
 import { initQuoteReveal } from "./js/quoteReveal.js";
 import { initGravitySection } from "./js/gravitySection.js";
 import { initContactForm } from "./js/contactForm.js";
-import { initServicesScene } from "./js/servicesScene.js?v=3";
+import { initServicesScene } from "./js/servicesScene.js?v=4";
 
 // Attach the loading-screen listeners before any scene starts loading
 // assets, so no progress ticks can slip by before it's watching.
