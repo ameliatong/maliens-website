@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maliens Digital Creative Agency | Malaysia</title>
+
+    <link rel="icon" type="image/png" href="image/Maliens-logo-favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Michroma&family=Silkscreen:wght@400;700&family=Montserrat:wght@300;400;500;600;700;800&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400&family=Playfair+Display:ital,wght@1,400;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
+
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+
+  <body>
+    <!-- LOADING SCREEN -->
+    <div id="loadingScreen" aria-hidden="true">
+      <span class="loading-percent" id="loadingPercent"
+        ><span class="loading-percent-number" id="loadingPercentNumber">0</span
+        ><span class="loading-percent-sign">%</span></span
+      >
+    </div>
+
+    <!-- 3D HERO CANVAS -->
+    <section class="hero-canvas-section" aria-hidden="true">
+      <canvas id="heroCanvas" class="hero-canvas"></canvas>
+    </section>
+
+    <div class="mobile-hero-title">Maliens Agency</div>
+
+    <!-- HEADER -->
+    <header id="siteHeader" class="site-header expanded">
+      <div class="ufo-wrap">
+        <img
+          src="image/ufo-header.png"
+          alt="UFO menu"
+          class="ufo-icon"
+          id="ufoIcon"
+        />
+      </div>
+
+      <nav class="header-bar" data-cursor-theme="light">
+        <a href="#home">{ HOME }</a>
+        <a href="#about">{ ABOUT }</a>
+        <a href="#services">{ SERVICES }</a>
+        <a href="#contact">{ CONTACT }</a>
+      </nav>
+
+      <!-- MOBILE FULL-SCREEN MENU -->
+      <nav class="mobile-nav-bar" id="mobileNavBar">
+        <img src="image/mobile-nav-bg.png" alt="" class="mobile-nav-bg" />
+        <div class="mobile-nav-links">
+          <a href="#home">{ HOME }</a>
+          <a href="#about">{ ABOUT }</a>
+          <a href="#services">{ SERVICES }</a>
+          <a href="#contact">{ CONTACT }</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- HERO TEXT -->
+    <div class="hero-text" id="home">
+      <div class="corner top-left"></div>
+
+      <div class="corner top-right mission">
+        <img src="image/Union.png" alt="" />
+        <span>MISSION ON EARTH</span>
+        <img src="image/Union.png" alt="" />
+      </div>
+
+      <div class="center-content">
+        <h1>&gt; WE BUILD BRANDS THAT</h1>
+        <h2>IMPOSSIBLE TO IGNORE</h2>
+        <h3>
+          A Digital Creative Agency who builds brands, campaigns through<br class="desktop-break" />
+          strong creative ideas designed for digital platforms to stop the
+          scroll.
+        </h3>
+      </div>
+
+      <div class="corner bottom-left">based in Kuala Lumpur Malaysia.</div>
+
+      <div class="corner bottom-right">
+        <img src="image/Arrow.png" alt="Maliens visual" class="corner-image" />
+      </div>
+    </div>
+
+    <div class="hero-asteroids" aria-hidden="true">
+      <img src="image/asteroid1-1.png" alt="" class="hero-asteroid asteroid-left asteroid-behind asteroid-left-1" />
+      <img src="image/asteroid1.png" alt="" class="hero-asteroid asteroid-left" />
+      <img src="image/asteroid2-1.png" alt="" class="hero-asteroid asteroid-right asteroid-behind asteroid-right-1" />
+      <img src="image/asteroid2-2.png" alt="" class="hero-asteroid asteroid-right asteroid-behind asteroid-right-2" />
+      <img src="image/asteroid2.png" alt="" class="hero-asteroid asteroid-right" />
+    </div>
+
+    <!-- SCROLL SECTIONS WRAPPER -->
+    <div id="scrollSections">
+      <!-- NEXT SECTION -->
+
+      <section class="next-section" id="about">
+        <section class="next-canvas-section" aria-hidden="true">
+          <canvas id="nextCanvas" class="next-canvas"></canvas>
+        </section>
+
+        <div class="next-section-inner">
+          <span class="mobile-maliens-decor" aria-hidden="true">MALIENS</span>
+          <span class="mobile-maliens-decor" aria-hidden="true">MALIENS</span>
+          <h2 class="main-title">
+            MALIENS
+            <span class="sub-title">CREATIVITY BEYOND ORDINARY</span>
+          </h2>
+          <span class="mobile-maliens-decor" aria-hidden="true">MALIENS</span>
+          <span class="mobile-maliens-decor" aria-hidden="true">MALIENS</span>
+          <span class="mobile-subtitle-below" aria-hidden="true">CREATIVITY<br />BEYOND ORDINARY</span>
+        </div>
+
+        <div class="mobile-spin-hint" id="mobileSpinHint" aria-hidden="true">
+          <img src="image/swipe.png" alt="" class="spin-hint-icon" />
+          <span>Swipe</span>
+        </div>
+
+        <img src="image/section_bg_ufo.png" alt="" class="section-bg-ufo" />
+      </section>
+
+      <!-- QUOTE SECTION -->
+      <section class="quote-section" id="quoteSection" data-cursor-theme="light">
+        <!-- QUOTE HERO -->
+        <div class="quote-hero">
+          <div class="quote-label">
+            ARRIVAL<br />
+            SINCE @2026
+          </div>
+
+          <div class="quote-hero-content">
+            <div class="quote-heading-row">
+              <span class="quote-heading-main">We Built</span>
+
+              <span class="quote-cow-group">
+                <span class="quote-arrow">&lt;</span>
+                <img src="image/cow2.png" alt="cow" class="quote-cow" />
+                <span class="quote-arrow">&gt;</span>
+              </span>
+
+              <span class="quote-heading-ideas">Ideas</span>
+            </div>
+
+            <div class="quote-subheading-row">
+              <p class="quote-intro-copy">
+                Not Your Ordinary<br />
+                Digital Creative Agency<br />
+                in Kuala Lumpur/.
+              </p>
+
+              <div class="quote-big-text">
+                <span>Don't Just</span>
+                <span>Live in Feed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRAVITY PILLS -->
+        <div class="gravity-section" id="gravitySection">
+          <div class="gravity-bg-layer" id="gravityBgLayer"></div>
+
+          <div class="gravity-pill">Creativity</div>
+          <div class="gravity-pill">Boldness</div>
+          <div class="gravity-pill">Strategy</div>
+          <div class="gravity-pill">Design</div>
+          <div class="gravity-pill">Storytelling</div>
+          <div class="gravity-pill">Ideation</div>
+
+          <img src="image/gravity_star.png" alt="" class="gravity-img gravity-star" />
+          <img src="image/gravity_star.png" alt="" class="gravity-img gravity-star" />
+          <img src="image/gravity_star.png" alt="" class="gravity-img gravity-star gravity-star-small" />
+          <img src="image/gravity_pixel.png" alt="" class="gravity-img gravity-pixel" />
+          <img src="image/gravity_alien.png" alt="" class="gravity-img gravity-alien" />
+        </div>
+
+        <!-- QUOTE ABOUT -->
+        <div class="quote-about">
+          <!-- ABOUT CONTENT -->
+          <div class="quote-about-content">
+            <div class="quote-about-tail">
+              <img
+                src="image/atsidetail.png"
+                alt=""
+                class="quote-about-tail-image"
+              />
+            </div>
+
+            <div class="quote-about-text">
+              <p class="quote-about-copy">
+                At Maliens, we don't chase the scroll, we disrupt it. We create
+                <strong>BOLD</strong>, scroll-stopping campaigns and brand
+                identities that don't just exist online, but interrupt behavior,
+                trigger emotion andddd...
+              </p>
+
+              <p class="quote-about-tagline">
+                Make Brands Stay In People's Mind
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARQUEE SECTION -->
+      <section class="marquee-section">
+        <div class="tape tape-1">
+          <div class="tape-track">
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+          </div>
+        </div>
+
+        <div class="tape tape-2">
+          <div class="tape-track reverse">
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+
+            <div class="tape-group">
+              <span>Not Your Ordinary Digital Creative Agency</span>
+              <img src="image/marquee-malienslogo.png" alt="" class="logo" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Service SECTION -->
+      <section class="services-section" id="services">
+        <canvas id="servicesCanvas" class="services-canvas"></canvas>
+
+        <!-- Fades the bottom of the 3D model into black so the pole
+             doesn't end abruptly mid-air -->
+        <div class="services-bottom-fade" aria-hidden="true"></div>
+
+        <div class="services-top-labels">
+          <span>OUR SERVICES</span>
+          <span>WHAT WE DO</span>
+          <span>OUR SERVICES</span>
+        </div>
+      </section>
+
+      <!-- Contact SECTION -->
+      <!-- CONTACT + FOOTER SECTION -->
+      <section class="contact-footer-wrap" id="contact">
+        <section class="contact-section">
+          <p class="contact-kicker">[WE GOT YOUR BACK]</p>
+
+          <h2 class="contact-title">
+            LET’S BREAK<br />
+            THE NOISE
+          </h2>
+
+          <form class="contact-form" id="contactForm">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <textarea name="message" placeholder="Message" required></textarea>
+
+            <div class="contact-action-area">
+              <div
+                class="cf-turnstile"
+                data-sitekey="0x4AAAAAAEOu3NMbtcTtvT2s"
+              ></div>
+
+              <p
+                id="contactStatusBefore"
+                class="contact-status contact-status-before"
+              ></p>
+
+              <button type="submit" class="send-btn" aria-label="Send message">
+                <span class="send-icon-img">
+                  <img src="image/contactSendButton.png" alt="" />
+                </span>
+
+                <span class="send-text">SEND</span>
+              </button>
+
+              <p
+                id="contactStatusAfter"
+                class="contact-status contact-status-after"
+              ></p>
+            </div>
+          </form>
+        </section>
+
+        <footer class="footer-section">
+          <img src="image/footerAurora.png" alt="" class="footer-aurora" />
+          <img src="image/footerUFO.png" alt="" class="footer-ufo" />
+
+          <!-- Desktop footer light -->
+          <img
+            src="image/footerUFOLight.png"
+            alt=""
+            class="footer-ufo-light footer-ufo-light-desktop"
+          />
+
+          <!-- Tablet + mobile footer light -->
+          <img
+            src="image/footerUFOLight2.png"
+            alt=""
+            class="footer-ufo-light footer-ufo-light-responsive"
+          />
+
+          <div class="footer-cta">
+            <div class="footer-cta-copy">
+              <p>Let’s create something</p>
+
+              <div class="footer-beyond-line">
+                <span class="footer-beyond-text">
+                  beyond <em>ordinary</em>
+                </span>
+
+                <a href="#contact" class="footer-cta-btn">
+                  <span class="footer-btn-icon">
+                    <img src="image/contactSendButton.png" alt="" />
+                  </span>
+
+                  <span class="footer-btn-text"> GET IN TOUCH NOW </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-contact">
+            <p>
+              <img
+                src="image/footerArrow.png"
+                alt=""
+                class="footer-contact-arrow"
+              />
+              maliensagency@gmail.com
+            </p>
+
+            <p>
+              <img
+                src="image/footerArrow.png"
+                alt=""
+                class="footer-contact-arrow"
+              />
+              +60 1116302617
+            </p>
+
+            <div class="footer-socials">
+              <a href="https://www.instagram.com/maliensagency/">
+                <img src="image/Instagram.png" alt="Instagram" />
+              </a>
+
+              <a href="https://www.facebook.com/profile.php?id=61587762636533">
+                <img src="image/Facebook.png" alt="Facebook" />
+              </a>
+
+              <a
+                href="https://www.linkedin.com/company/maliensdigitalcreativeagency/?originalSubdomain=my"
+              >
+                <img src="image/Linkedin.png" alt="LinkedIn" />
+              </a>
+
+              <a href="https://www.tiktok.com/@maliensagency?_r=1&_t=ZS-99OGAtM6E4L">
+                <img src="image/tiktok.png" alt="TikTok" />
+              </a>
+
+              <a href="https://xhslink.cn/m/ARqnqJd7LnB">
+                <img src="image/Rednote.png" alt="RedNote" />
+              </a>
+            </div>
+          </div>
+          <p class="footer-copyright">
+            © 2026 Maliens Digital Creative Agency. All rights reserved.
+          </p>
+        </footer>
+      </section>
+    </div>
+
+    <!-- Kept OUTSIDE #scrollSections so its `position: fixed` resolves
+         against the viewport (not the transformed scroll wrapper) and it
+         can sit dead-centre of the screen while a service is focused. -->
+    <div class="service-info-panel" id="serviceInfoPanel">
+      <div class="service-info-text" id="serviceInfoText">
+        <h2 id="serviceInfoTitle"></h2>
+
+        <p id="serviceInfoDescription"></p>
+
+        <ul id="serviceInfoList"></ul>
+      </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

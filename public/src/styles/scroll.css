@@ -1,0 +1,17 @@
+.scroll-spacer {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 115vh;
+}
+
+#scrollSections {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  visibility: hidden;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(0, 100vh, 0);
+}

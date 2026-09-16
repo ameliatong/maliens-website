@@ -1,0 +1,443 @@
+/* ========================================================= */
+/* SERVICES SECTION */
+/* ========================================================= */
+
+.services-section {
+  position: relative;
+
+  width: 100%;
+  height: 120vh;
+  min-height: 900px;
+
+  margin-top: 2px;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    #8f90ff 0%,
+    #6c70ff 12%,
+    #2637ff 30%,
+    #0717df 52%,
+    #020573 76%,
+    #000000 100%
+  );
+}
+
+/* ========================================================= */
+/* THREE.JS CANVAS */
+/* ========================================================= */
+
+.services-canvas {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: 0;
+
+  z-index: 2;
+
+  touch-action: none;
+}
+
+/* ========================================================= */
+/* BOTTOM FADE — hides the abrupt end of the model's pole */
+/* ========================================================= */
+
+.services-bottom-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 55vh;
+
+  z-index: 5; /* above the canvas (2), below the labels/panel (10/20) */
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.55) 45%,
+    rgba(0, 0, 0, 0.9) 72%,
+    #000000 100%
+  );
+}
+
+/* ========================================================= */
+/* TOP LABELS */
+/* ========================================================= */
+
+.services-top-labels {
+  position: absolute;
+
+  top: clamp(40px, 8vh, 90px);
+  left: 0;
+
+  width: 100%;
+
+  padding: 0 clamp(40px, 5vw, 80px);
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 10;
+  pointer-events: none;
+}
+
+.services-top-labels span {
+  font-family: "Michroma", sans-serif;
+  font-size: clamp(13px, 1.25vw, 20px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+/* ========================================================= */
+/* INFORMATION PANEL */
+/* ========================================================= */
+
+/* ========================================================= */
+/* INFORMATION PANEL */
+/* ========================================================= */
+
+.service-info-panel {
+  position: fixed;
+
+  /*
+    Vertically centred in the viewport (paired with the
+    translateY(-50%) below). Adjust this value if you want
+    the whole panel slightly higher/lower.
+  */
+  top: 50%;
+
+  right: clamp(32px, 7vw, 130px);
+
+  width: min(42vw, 620px);
+
+  /*
+    Keep enough room above and below so longer
+    service content can scroll without being cut off.
+  */
+  max-height: 80vh;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-right: 12px;
+
+  z-index: 20;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transform: translateY(-50%) translateX(45px);
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.45s ease;
+
+  scrollbar-width: none;
+}
+
+.service-info-panel::-webkit-scrollbar {
+  display: none;
+}
+
+.service-info-panel.visible {
+  opacity: 1;
+  visibility: visible;
+
+  pointer-events: auto;
+
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Separate from .service-info-panel's own show/hide (which spans the whole
+   focused session, entry to exit): this fades just the text content, so the
+   panel's dark scrim can keep masking the model's edge after the last
+   service finishes even once the text itself has faded away. */
+.service-info-text {
+  opacity: 0;
+
+  transition: opacity 0.4s ease;
+}
+
+.service-info-text.visible {
+  opacity: 1;
+}
+
+.service-info-panel h2 {
+  margin: 0 0 18px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(28px, 3.2vw, 52px);
+  font-weight: 700;
+  line-height: 124%;
+  letter-spacing: 0;
+}
+
+/* Plain wrapper now — servicesScene.js splits the title into words for the
+   slide-up reveal below, each getting its own copy of the gradient (same
+   reasoning as the hero/contact headings: a two-level-deep descendant
+   can't reliably clip an ancestor's background-image, so each word paints
+   its own copy directly instead of relying on this element's own
+   background-clip: text). */
+.service-info-panel h2 .title-grad {
+  display: inline;
+}
+
+/* Word-by-word "cut reveal" (same technique as the hero/contact/quote
+   sections) — each word sits in an overflow-clipped box and slides up into
+   place, staggered, replayed by servicesScene.js's showServiceContent()
+   every time a different service is shown. */
+.service-info-panel h2 .vcr-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 124%;
+}
+
+.service-info-panel h2 .vcr-inner {
+  display: inline-block;
+  transform: translateY(110%);
+
+  background: linear-gradient(180deg, #00d4ff 0%, #ffffff 65%);
+  background-size: 100% 1.3em;
+  background-repeat: repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.service-info-panel p .vcr-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 124%;
+}
+
+.service-info-panel p .vcr-inner {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+/* Figma:
+   Montserrat 300
+   13px
+   line-height 124%
+*/
+.service-info-panel p {
+  margin: 0 0 25px;
+
+  max-width: 470px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 300;
+  line-height: 124%;
+
+  color: #ffffff;
+}
+
+/* ========================================================= */
+/* SERVICE LIST */
+/* ========================================================= */
+
+.service-info-panel ul {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  list-style: none;
+}
+
+.service-info-panel li {
+  position: relative;
+
+  padding-left: 31px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 300;
+  line-height: 124%;
+
+  color: #ffffff;
+}
+
+/*
+  Pixel arrow:
+  Silkscreen
+  #04E4FE
+*/
+.service-info-panel li::before {
+  content: ">";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  font-family: "Silkscreen", monospace;
+  font-size: clamp(16px, 1.25vw, 20px);
+  font-weight: 400;
+  line-height: 90%;
+  letter-spacing: 0.09em;
+
+  color: #04e4fe;
+}
+
+/* ========================================================= */
+/* MOBILE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+  .services-section {
+    position: relative;
+    min-height: 1000px;
+    height: 135vh;
+  }
+
+  .services-top-labels {
+    top: 130px;
+    padding: 0 20px;
+  }
+
+  .services-top-labels span {
+    font-size: 10px;
+  }
+
+  /* Mobile's section is taller (135vh) than the fixed 55vh fade covers, so
+     the pole's bare shaft shows against the plain background lower down —
+     and the darkening didn't reach far enough up to cover the default
+     (unfocused) view's upper boards either. Stretch the fade to nearly the
+     full section height — same pure-black gradient as the base rule, just
+     covering much more of it — so the whole default scroll through the
+     section reads as one consistent moody gradient instead of a plain
+     bright band up top and only a masked pole down at the very bottom. */
+  .services-bottom-fade {
+    height: 130vh;
+  }
+
+  .service-info-panel {
+    position: fixed;
+
+    top: auto;
+    bottom: 0;
+
+    left: 0;
+    right: 0;
+
+    width: auto;
+
+    /* Cancels the desktop base rule's translateY(-50%) translateX(45px)
+       (its own vertical-centering/slide-in transform) — with no mobile
+       override, that was leaking through and shifting this panel up by
+       half its own height, off its bottom: 0 anchor. */
+    transform: none;
+
+    min-height: 55vh;
+    max-height: 85vh;
+
+    padding: 120px 28px 30px 28px;
+
+    /* The 3D board sits directly behind this panel on mobile (it's no
+       longer shifted out from under it) — a soft black-to-transparent
+       scrim (not a boxed background) keeps the text readable against the
+       bright board texture without looking like a floating card.
+       No background-attachment here on purpose: "fixed" maps the gradient
+       to the full viewport height rather than the panel's own (55-85vh)
+       box, so the "fully transparent" stop landed above the panel's actual
+       top edge — the panel cut off mid-fade, showing as a hard line. Left
+       at the default ("scroll"), the gradient always spans the panel's own
+       box, so 100% (fully transparent) always lands exactly at its top. */
+    background-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 0) 100%
+    );
+
+    z-index: 20;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+      opacity 0.4s ease,
+      visibility 0.4s,
+      min-height 0.6s ease;
+  }
+
+  /* Once the last service finishes, the panel grows to cover the full
+     model (not just its own normal 55-85vh band) so nothing of it —
+     including the bare end of the pole — is left showing while the page
+     scrolls on to the next section. Toggled by JS alongside
+     hideServiceText(); cleared together with the rest on a true exit. */
+  .service-info-panel.covers-model {
+    min-height: 100vh;
+  }
+
+  .service-info-panel.visible {
+    opacity: 1;
+    visibility: visible;
+
+    pointer-events: auto;
+
+    /* Same cancellation as the base rule above — needed again here because
+       the desktop .service-info-panel.visible rule (two classes) is more
+       specific than a plain mobile .service-info-panel override, so it
+       still wins over just resetting the non-.visible state. */
+    transform: none;
+  }
+
+  .service-info-panel h2 {
+    font-size: 34px;
+  }
+
+  .service-info-panel p,
+  .service-info-panel li {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .service-info-panel li::before {
+    line-height: 1.5;
+  }
+
+  .service-info-panel ul {
+    margin-bottom: 20px;
+  }
+}
+
+/* Between 500 and 768px the panel's text wraps to fewer lines (more
+   horizontal room), so the fixed 55vh min-height from the block above
+   leaves a growing empty gap below the list. Only this width band needs
+   a shorter floor — under 500px the text wraps back to enough lines to
+   fill 55vh reasonably on its own. */
+@media (min-width: 501px) and (max-width: 768px) {
+  .service-info-panel {
+    min-height: 42vh;
+  }
+}

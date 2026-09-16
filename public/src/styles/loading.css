@@ -1,0 +1,64 @@
+/* ===================== */
+/* LOADING SCREEN */
+/* ===================== */
+/* Covers the page until loadingScreen.js confirms every asset (3D models,
+   textures, images, video) has actually finished loading — see that file
+   for the completion gate. Sits above everything (z-index) and, once done,
+   clips away upward like a wipe/mask — the gradient and number stay put
+   (no transform on the element itself), only the visible box shrinks from
+   the bottom via clip-path, revealing the page underneath. */
+
+#loadingScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  padding: 0 clamp(24px, 6vw, 90px) clamp(24px, 7vw, 90px) 0;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    to bottom,
+    #000000 0%,
+    #04041c 28%,
+    #0b0864 58%,
+    #2f4bff 100%
+  );
+
+  clip-path: inset(0 0 0 0);
+  /* Fast-to-slow — same decelerating curve used for the site's other big
+     reveals (headline/word slide-ups) — rather than the symmetric
+     ease-in-out this had before. Slowed to 2.5s so the deceleration
+     actually reads as dynamic instead of snapping past it. */
+  transition: clip-path 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: clip-path;
+}
+
+#loadingScreen.is-hidden {
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+
+.loading-percent {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-size: clamp(6rem, 20vw, 15rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.loading-percent-sign {
+  font-size: 0.4em;
+  vertical-align: baseline;
+  margin-left: 0.05em;
+}
+
+@media (max-width: 500px) {
+  .loading-percent {
+    font-size: clamp(4rem, 24vw, 6.5rem);
+  }
+}

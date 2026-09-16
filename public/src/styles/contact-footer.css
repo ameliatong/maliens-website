@@ -1,0 +1,1200 @@
+/* ===================== */
+/* CONTACT + FOOTER WRAP */
+/* ===================== */
+
+.contact-footer-wrap {
+  position: relative;
+  min-height: 170vh;
+  overflow: hidden;
+  color: #ffffff;
+
+  background: linear-gradient(180deg, #000000 0%, #030453 37%, #030453 100%);
+}
+
+/* ===================== */
+/* CONTACT SECTION */
+/* ===================== */
+
+.contact-section {
+  position: relative;
+  min-height: 95vh;
+  padding: clamp(150px, 8vw, 118px) clamp(40px, 5vw, 72px) 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.contact-kicker {
+  font-family: "Silkscreen", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+
+  background: linear-gradient(180deg, #00d4ff 0%, #ffffff 60%);
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Typewriter cursor while contactForm.js is actively typing the kicker
+   line — reuses the same blink keyframes hero.css defines for the hero
+   kicker (@keyframes are global once bundled, no need to redeclare). */
+.contact-kicker.is-typing::after {
+  content: "_";
+  margin-left: 2px;
+  -webkit-text-fill-color: #ffffff;
+  animation: kicker-cursor-blink 0.8s step-end infinite;
+}
+
+.contact-title {
+  margin: 0 auto;
+  font-family: "Michroma", sans-serif;
+  font-size: clamp(4rem, 6.6vw, 90px);
+  line-height: 129%;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* Word-by-word "cut reveal" (same technique as the quote section's
+   paragraphs, quoteReveal.js, and the hero description) — each word sits
+   in an overflow-clipped box and slides up into place, staggered, played
+   by contactForm.js once this section scrolls into view. Each word gets
+   its own copy of the gradient rather than relying on the title's own
+   background-clip: text, since the title has no direct text left of its
+   own once split into words (see the equivalent hero.css comment). */
+.contact-title .vcr-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 129%;
+}
+
+.contact-title .vcr-inner {
+  display: inline-block;
+  transform: translateY(110%);
+
+  background: linear-gradient(180deg, #00d4ff 0%, #ffffff 60%);
+  background-size: 100% 1.3em;
+  background-repeat: repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ===================== */
+/* CONTACT FORM */
+/* ===================== */
+
+.contact-form {
+  width: min(100%, 467px);
+  margin: clamp(68px, 5vw, 82px) auto 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Each direct child (name/email/message fields, the action area) slides up
+   and fades in one by one — contactForm.js sets a per-child
+   transition-delay and toggles "is-revealed" on the form to trigger it. */
+.contact-form > * {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-form.is-revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.85);
+  background: transparent;
+  outline: none;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  line-height: 124.5%;
+  font-weight: 300;
+  color: #ffffff;
+
+  padding: 0 0 5px;
+  margin-bottom: 34px;
+}
+
+.contact-form textarea {
+  min-height: 34px;
+  resize: vertical;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* before and after send */
+.contact-action-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cf-turnstile {
+  align-self: flex-start;
+}
+
+/* Both status positions */
+.contact-status {
+  width: 100%;
+  min-height: 0;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.82);
+
+  text-align: left;
+}
+
+/* Verification / Sending / Errors */
+.contact-status-before {
+  margin: 18px 0 20px;
+}
+
+/* SEND */
+.contact-action-area .send-btn {
+  align-self: flex-end;
+}
+
+/* Success */
+.contact-status-after {
+  margin: 18px 0 0;
+}
+
+/* ===================== */
+/* SEND BUTTON */
+/* ===================== */
+
+.send-btn {
+  align-self: flex-end;
+
+  width: 123px;
+  height: 57px;
+  padding: 0 16px 0 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 11px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+
+  background: rgba(130, 150, 255, 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.send-icon-img {
+  width: 33.4px;
+  height: 33.4px;
+  flex: 0 0 33.4px;
+  display: block;
+}
+
+.send-icon-img img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.send-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  line-height: 124.5%;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.send-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(160, 180, 255, 0.28);
+}
+
+/* ===================== */
+/* FOOTER SECTION */
+/* ===================== */
+
+.footer-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 clamp(40px, 5vw, 72px) 58px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: 1fr auto 0px;
+  align-items: end;
+
+  background: transparent;
+
+  --light-top: 200px;
+  --ufo-top: 40px;
+}
+
+.footer-section::before {
+  display: none;
+}
+
+/* Footer visual layers */
+
+.footer-aurora {
+  position: absolute;
+  right: 0;
+  top: auto;
+  width: min(72vw, 980px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===================== */
+/* FOOTER LIGHTS */
+/* ===================== */
+
+.footer-ufo-light {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 2;
+}
+
+/* Desktop light */
+.footer-ufo-light-desktop {
+  display: block;
+  position: absolute;
+
+  left: 50%;
+  top: auto;
+  bottom: 0;
+
+  /*Follows the viewport width,
+    but never becomes narrower than 1500px.*/
+  width: max(100vw, 1500px);
+  max-width: none;
+  height: auto;
+
+  transform: translateX(-50%);
+
+  object-fit: contain;
+  object-position: top center;
+
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Responsive light */
+.footer-ufo-light-responsive {
+  display: none;
+}
+
+.footer-ufo {
+  position: absolute;
+
+  left: 50%;
+  top: var(--ufo-top);
+
+  transform: translateX(-50%);
+
+  width: 620px;
+  max-width: none;
+  height: auto;
+
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Above 1024px the light beam's image (.footer-ufo-light-desktop) is
+   width: max(100vw, 1500px) with auto height, so its rendered height keeps
+   growing as the viewport widens — and since it's bottom-anchored to the
+   section, that pushes its tip further and further above a fixed `top`
+   value, opening a growing gap under the saucer on wide screens. The
+   beam's tip sits exactly at the image's own top edge, so its distance
+   from the section's bottom is just the image's rendered height: tying
+   the saucer's `bottom` to that same formula (817/2160 is the image's
+   intrinsic aspect ratio) keeps it locked to the tip at every width. */
+@media (min-width: 1025px) {
+  .footer-ufo {
+    top: auto;
+    bottom: calc(max(100vw, 1500px) * 817 / 2160 - 140px);
+  }
+}
+
+/* Footer content */
+
+.footer-cta,
+.footer-nav,
+.footer-contact {
+  position: relative;
+  z-index: 6;
+}
+
+.footer-cta {
+  grid-column: 1 / 2;
+  align-self: end;
+  max-width: 680px;
+  margin-top: 370px;
+  margin-bottom: 220px;
+}
+
+.footer-cta p {
+  margin: 0 0 34px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 124%;
+  letter-spacing: 0;
+
+  color: #fff;
+  text-shadow: 0 4px 12px rgba(2, 8, 118, 0.35);
+}
+
+.footer-cta-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-cta-copy p {
+  margin: 0;
+}
+
+.footer-beyond-line {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 30px;
+
+  margin-top: 0px;
+  margin-left: 260px;
+}
+
+.footer-beyond-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 124%;
+  letter-spacing: 0;
+
+  color: #ffffff;
+  white-space: nowrap;
+
+  text-shadow: 0 4px 12px rgba(2, 8, 118, 0.35);
+}
+
+.footer-beyond-text em {
+  font-family: "Playfair Display", serif;
+  font-size: 52px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: -12px;
+  padding-right: 18px;
+
+  display: inline-block;
+
+  background: linear-gradient(180deg, #00ff89 0%, #7cffb7 35%, #ffffff 100%);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  text-shadow: none;
+}
+
+.footer-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 11px;
+
+  width: 228px;
+  height: 57px;
+  padding: 0 16px 0 12px;
+  box-sizing: border-box;
+
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+
+  background: rgba(130, 150, 255, 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    inset 0 0 0 999px rgba(130, 150, 255, 0.18),
+    0 1.39px 31.1px rgba(255, 255, 255, 0.58);
+
+  color: #ffffff;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.footer-btn-icon {
+  width: 33.4px;
+  height: 33.4px;
+  flex: 0 0 33.4px;
+  display: block;
+}
+
+.footer-btn-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.footer-btn-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  line-height: 124.5%;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.footer-cta-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(160, 180, 255, 0.28);
+}
+
+.footer-nav {
+  grid-column: 1 / 2;
+  align-self: end;
+
+  display: flex;
+  gap: 32px;
+}
+
+.footer-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* ===================== */
+/* FOOTER CONTACT */
+/* ===================== */
+
+.footer-contact {
+  grid-column: 3 / 4;
+  justify-self: end;
+  align-self: end;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer-contact p {
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 5.62px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 124%;
+  color: #ffffff;
+}
+
+.footer-contact-arrow {
+  width: 18.6px;
+  height: 18.6px;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* turnstile */
+.contact-status {
+  min-height: 22px;
+  margin: 14px 0 0;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.82);
+  text-align: left;
+}
+
+.send-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ===================== */
+/* FOOTER SOCIALS */
+/* ===================== */
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-top: 8px;
+}
+
+.footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  text-decoration: none;
+}
+
+.footer-socials img {
+  width: 30px;
+  height: 30px;
+  display: block;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.footer-socials a:hover img {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+/* ===================== */
+/* FOOTER COPYRIGHT */
+/* ===================== */
+
+.footer-copyright {
+  position: absolute;
+
+  left: 50%;
+  bottom: clamp(15px, 2vw, 20px);
+
+  transform: translateX(-50%);
+
+  margin: 0;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.4;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  white-space: nowrap;
+
+  z-index: 6;
+}
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+/* ===================== */
+/* TABLET FOOTER */
+/* Desktop arrangement, adjusted sizing */
+/* ===================== */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .footer-section {
+    min-height: 760px;
+
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 54px;
+
+    /* Keep desktop grid arrangement */
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+  }
+
+  /* Keep desktop light image on tablet */
+  .footer-ufo-light-desktop {
+    display: block;
+
+    width: 1500px;
+    max-width: none;
+  }
+
+  .footer-ufo-light-responsive {
+    display: none;
+  }
+
+  .footer-ufo {
+    top: 200px;
+
+    width: 500px;
+    max-width: none;
+  }
+
+  .footer-cta {
+    grid-column: 1 / 4;
+
+    width: 100%;
+    max-width: none;
+
+    margin-top: 390px;
+  }
+
+  .footer-cta-copy {
+    width: 100%;
+  }
+
+  /* First line */
+  .footer-cta-copy > p {
+    margin-left: 0;
+  }
+
+  .footer-cta p,
+  .footer-beyond-text {
+    font-size: 32px;
+  }
+
+  .footer-beyond-text em {
+    font-size: 45px;
+  }
+
+  /* Second line + CTA button */
+  .footer-beyond-line {
+    width: 100%;
+
+    margin-left: 0;
+    margin-top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+  }
+
+  /* Beyond ordinary stays LEFT */
+  .footer-beyond-text {
+    margin-left: 0;
+  }
+
+  /* Button stays RIGHT */
+  .footer-cta-btn {
+    margin-left: auto;
+
+    width: 205px;
+    flex-shrink: 0;
+  }
+
+  .footer-cta p,
+  .footer-beyond-text {
+    font-size: 32px;
+  }
+
+  .footer-btn-text {
+    font-size: 12px;
+  }
+
+  .footer-nav {
+    grid-column: 1 / 2;
+    gap: 22px;
+  }
+
+  .footer-nav a {
+    font-size: 15px;
+  }
+
+  .footer-contact {
+    grid-column: 3 / 4;
+  }
+
+  .footer-contact p {
+    font-size: 14px;
+  }
+
+  .footer-contact-arrow {
+    width: 15px;
+    height: 15px;
+  }
+
+  .footer-socials a,
+  .footer-socials img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .footer-copyright {
+    font-size: 11px;
+  }
+}
+
+/*  */
+/* mobile */
+/*  */
+
+@media (max-width: 600px) {
+  .footer-ufo-light-desktop {
+    display: none;
+  }
+
+  .footer-ufo-light-responsive {
+    display: block;
+  }
+
+  .contact-section {
+    height: 100vh;
+    padding-top: 0;
+    padding-bottom: 100px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  /* At short/narrow phone heights the content nearly fills the full 100vh
+     box already, so justify-content: flex-end has almost no slack to work
+     with and the block reads as sitting flush against the top. Shrinking
+     the bottom padding a little frees up room for flex-end to actually
+     shift the whole block down. */
+  @media (max-width: 390px) {
+    .contact-section {
+      padding-bottom: 60px;
+    }
+  }
+
+  .contact-kicker {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .contact-title {
+    font-size: clamp(2.7rem, 9vw, 4.2rem);
+  }
+
+  .contact-form {
+    width: min(100%, 82vw);
+    margin-top: 52px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 17px;
+  }
+
+  .contact-action-row {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    /* Cloudflare → SEND */
+    gap: 30px;
+
+    /* Message field → Cloudflare */
+    margin-top: 0px;
+  }
+
+  /* CLOUDFLARE */
+  .cf-turnstile {
+    align-self: flex-start;
+    margin: 0;
+  }
+
+  /* SEND BUTTON */
+  .contact-action-row .send-btn {
+    align-self: flex-end;
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  /* STATUS MESSAGE */
+  .contact-status {
+    width: 100%;
+
+    /* SEND → status */
+    margin: 20px 0 0;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+
+    color: rgba(255, 255, 255, 0.82);
+    text-align: left;
+  }
+
+  /* ===================== */
+  /* MOBILE FOOTER */
+  /* ===================== */
+
+  .footer-section {
+    position: relative;
+
+    width: 100%;
+    min-height: 900px;
+
+    padding: 0 39px 42px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+
+    overflow: hidden;
+  }
+
+  /* ===================== */
+  /* MOBILE BACKGROUND ART */
+  /* ===================== */
+
+  /* Back to position:absolute, anchored from the section's bottom instead
+     of its top. .footer-ufo-light-responsive is also bottom-anchored with a
+     FIXED width at this breakpoint (so its rendered height is constant),
+     and its tip sits exactly at its own top edge — so the tip's distance
+     from the section's bottom is just that constant height. Tying the
+     saucer's `bottom` to the same math (1743/2679 is the light image's
+     intrinsic aspect ratio, 1100px its width here) keeps the saucer locked
+     to the tip without depending on the flex flow / sibling content
+     heights, which drifted across screen sizes. */
+  .footer-ufo {
+    position: absolute;
+    left: 50%;
+    top: auto;
+    bottom: calc(1100px * 1743 / 2679 - 140px);
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    z-index: 4;
+  }
+
+  .footer-ufo-light-responsive {
+    position: absolute;
+
+    left: 50%;
+    top: auto;
+    bottom: 0;
+
+    width: 1100px;
+    max-width: none;
+    height: auto;
+
+    transform: translateX(-50%);
+
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .footer-aurora {
+    position: absolute;
+
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 190vw;
+    max-width: none;
+
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ===================== */
+  /* MOBILE CTA */
+  /* ===================== */
+
+  .footer-cta {
+    position: relative;
+
+    grid-column: auto;
+
+    width: 100%;
+    max-width: none;
+
+    /* .footer-ufo is position:absolute (out of flow), bottom-anchored
+       against the section like the light-beam graphic behind it — so this
+       margin is what reserves its visual space above .footer-cta. */
+    margin: 250px 0 0;
+    margin-bottom: 120px;
+
+    align-self: auto;
+
+    z-index: 6;
+  }
+
+  .footer-cta-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-cta-copy p,
+  .footer-cta p {
+    margin: 0;
+
+    font-size: clamp(27px, 7.2vw, 34px);
+    line-height: 1.35;
+    font-weight: 500;
+
+    white-space: nowrap;
+  }
+
+  .footer-beyond-line {
+    width: 100%;
+
+    margin: 0;
+    margin-top: 2px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 36px;
+  }
+
+  .footer-beyond-text {
+    display: flex;
+    align-items: baseline;
+
+    gap: 8px;
+
+    font-size: clamp(27px, 7.2vw, 34px);
+    line-height: 1.2;
+
+    white-space: nowrap;
+  }
+
+  .footer-beyond-text em {
+    font-size: clamp(39px, 10vw, 48px);
+
+    margin-top: -8px;
+    padding-right: 0;
+
+    line-height: 1;
+  }
+
+  /* ===================== */
+  /* MOBILE CTA BUTTON */
+  /* ===================== */
+
+  .footer-cta-btn {
+    align-self: flex-end;
+
+    width: auto;
+    height: 59px;
+
+    margin-right: 0;
+    padding: 0 17px 0 11px;
+
+    gap: 12px;
+  }
+
+  .footer-btn-icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .footer-btn-text {
+    font-size: 16px;
+  }
+
+  /* ===================== */
+  /* MOBILE NAVIGATION */
+  /* ===================== */
+
+  .footer-nav {
+    position: relative;
+
+    grid-column: auto;
+    align-self: auto;
+
+    width: 100%;
+
+    margin-top: 94px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 0;
+
+    z-index: 6;
+  }
+
+  .footer-nav a {
+    font-size: clamp(17px, 4.7vw, 22px);
+    font-weight: 400;
+  }
+
+  /* ===================== */
+  /* MOBILE CONTACT */
+  /* ===================== */
+
+  .footer-contact {
+    position: relative;
+
+    grid-column: auto;
+
+    justify-self: auto;
+    align-self: auto;
+
+    width: 100%;
+
+    margin-top: 46px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 15px;
+
+    z-index: 6;
+  }
+
+  .footer-contact p {
+    font-size: clamp(16px, 4.4vw, 21px);
+    line-height: 1.3;
+
+    gap: 15px;
+
+    white-space: nowrap;
+  }
+
+  .footer-contact-arrow {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ===================== */
+  /* MOBILE SOCIALS */
+  /* ===================== */
+
+  .footer-socials {
+    margin-top: 15px;
+
+    gap: 28px;
+  }
+
+  .footer-socials a,
+  .footer-socials img {
+    width: 31px;
+    height: 31px;
+  }
+
+  /* ===================== */
+  /* MOBILE COPYRIGHT */
+  /* ===================== */
+
+  .footer-copyright {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+
+    margin: 0;
+    padding-top: 32px;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(11px, 3vw, 14px);
+    font-weight: 300;
+    line-height: 1.4;
+
+    text-align: center;
+    color: rgba(255, 255, 255, 0.85);
+
+    z-index: 6;
+  }
+
+  @media (max-width: 444px) {
+    .footer-section {
+      min-height: 880px;
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+
+    .footer-ufo {
+      /* Light image is 900px wide at this breakpoint (not 1100px), so its
+         rendered height — and thus the tip's distance from the bottom —
+         is different here; recomputed with the same formula. */
+      bottom: calc(900px * 1743 / 2679 - 100px);
+    }
+
+    .footer-ufo-light-responsive {
+      top: auto;
+
+      width: 900px;
+      max-width: none;
+      height: auto;
+    }
+
+    .footer-cta {
+      margin-top: 205px;
+      margin-bottom: 0px;
+    }
+
+    .footer-cta-btn {
+      min-width: 0;
+      width: auto;
+    }
+
+    .footer-btn-text {
+      font-size: 14px;
+    }
+
+    .footer-nav {
+      margin-top: 82px;
+    }
+
+    .footer-contact {
+      margin-top: 42px;
+    }
+
+    .footer-contact p {
+      font-size: 16px;
+    }
+
+    .footer-copyright {
+      padding-top: 72px;
+      font-size: 11px;
+    }
+  }
+}

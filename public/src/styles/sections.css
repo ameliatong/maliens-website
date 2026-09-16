@@ -1,0 +1,402 @@
+.next-section {
+  position: relative;
+  height: 115vh;
+  overflow: hidden;
+
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.6) 15%,
+      rgba(0, 0, 0, 1) 35%,
+      #000000 100%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(60px, 8vw, 120px) 15px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Blue glow — split out of the section's own background (was baked into
+   one static `background` shorthand) into its own layer so it can rise
+   into place alongside section-bg-ufo instead of just being there from
+   the start. Toggled by the same 30%-scrolled-in check in
+   nextsectionLogo.js that reveals the UFO, via the "bg-glow-revealed"
+   class on .next-section. */
+.next-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background: radial-gradient(circle at 50% 100%,
+    rgba(17, 0, 255, 0.95) 40%,
+    rgba(12, 0, 204, 0.75) 50%,
+    rgba(7, 0, 138, 0.45) 60%,
+    rgba(3, 0, 74, 0.2) 75%,
+    rgba(0, 0, 0, 0) 82%);
+
+  opacity: 0;
+  transform: translateY(220px);
+  transition: opacity 1.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.next-section.bg-glow-revealed::before {
+  opacity: 1;
+  transform: translateY(0);
+
+  /* Slow ambient bob once settled — delayed to start exactly as the
+     slide-in transition above finishes, so the handoff is seamless (both
+     start from the same translateY(0)). */
+  animation: bg-glow-bob 9s ease-in-out 1.8s infinite;
+}
+
+@keyframes bg-glow-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+/* Dedicated fade-to-white overlay at the very bottom edge, pinned to a
+   fixed pixel height so it renders predictably regardless of how the
+   section's own background gradients above interact with each other. A
+   flat solid-white band for the last stretch (not just the very last
+   pixel) gives a safety margin bigger than the glow's own ±16px bob
+   amplitude, so that animation can never open a gap at the seam against
+   .quote-section below. */
+.next-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 500px;
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 55%,
+    #ffffff 85%,
+    #ffffff 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ===================== */
+/* NEXT 3D CANVAS */
+/* ===================== */
+
+.next-canvas-section {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 4;
+  pointer-events: none;
+}
+
+.next-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Mobile-only: let the canvas capture touch so the logo can be spun by
+   hand — desktop keeps pointer-events: none and rotates via window-wide
+   cursor tracking instead (see nextsectionLogo.js). touch-action: none
+   stops the browser trying to scroll the page during the drag gesture. */
+@media (max-width: 500px) {
+  .next-canvas-section {
+    pointer-events: auto;
+  }
+
+  .next-canvas {
+    touch-action: none;
+  }
+}
+
+/* ===================== */
+/* NEXT CONTENT */
+/* ===================== */
+
+.next-section-inner {
+  width: 100%;
+  max-width: 2200px;
+  min-width: 0;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5vw;
+
+  position: relative;
+  z-index: 3;
+}
+
+@media (max-width: 500px) {
+  .next-section-inner {
+    margin-top: 130px;
+  }
+}
+
+/* Decorative repeated "MALIENS" rows — mobile only, hidden on desktop.
+   Sits behind the 3D canvas (z-index 4) same as the real heading, so the
+   glass logo overlaps them the same way it overlaps the real title. */
+.mobile-maliens-decor {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .mobile-maliens-decor {
+    display: block;
+    font-family: "Michroma", sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.1rem, calc(13.5vw - 4px), 18rem);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    text-align: center;
+
+    /* -webkit-text-stroke has a rendering floor in Chromium — sub-1px
+       widths don't actually get thinner, they render close to 1px
+       regardless. A tight, near-zero-blur text-shadow traces the glyph
+       edges instead and can genuinely go sub-pixel-thin. */
+    color: transparent;
+    text-shadow: 0 0 0.6px rgba(255, 255, 255, 0.4);
+
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Per-letter reveal, staggered via inline transitionDelay set in
+     nextsectionLogo.js — same mechanics as the real title's .letter spans. */
+  .mobile-maliens-decor .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(70px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-maliens-decor.is-revealed .letter {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Spin gesture hint — mobile only. Toggled by nextsectionLogo.js: fades in
+   after 5s of no touch interaction with the 3D logo, fades out again as
+   soon as the user starts dragging. */
+.mobile-spin-hint {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .mobile-spin-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .mobile-spin-hint.is-visible {
+    opacity: 1;
+  }
+
+  .spin-hint-icon {
+    width: 28px;
+    height: auto;
+    opacity: 0.8;
+    animation: spinHintBlink 2.6s ease-in-out infinite;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+  }
+
+  .mobile-spin-hint span {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes spinHintBlink {
+  0%, 100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.mobile-subtitle-below {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .mobile-subtitle-below {
+    display: block;
+    margin-top: 0.75em;
+
+    font-family: "Michroma", sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+    line-height: 1.6;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ffffff;
+  }
+}
+
+.section-bg-ufo {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+
+  transform: translate(-50%, 460px);
+
+  width: 100%;
+  min-width: 1400px;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 1;
+
+  /* Slide-in, triggered by nextsectionLogo.js at 30% scrolled into view —
+     a bigger rise with a slight overshoot ease for a punchier "landing"
+     rather than a slow, flat glide. */
+  opacity: 0;
+  transition: opacity 1.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.section-bg-ufo.is-revealed {
+  opacity: 1;
+  transform: translate(-50%, 0);
+
+  /* Slow ambient hover once settled — delayed to start exactly as the
+     slide-in transition above finishes, so the handoff is seamless (both
+     start from the same translate(-50%, 0)). */
+  animation: ufo-hover 3.2s ease-in-out 1.8s infinite;
+}
+
+@keyframes ufo-hover {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -32px);
+  }
+}
+
+.next-section h2.main-title {
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Michroma", sans-serif;
+  /* The preferred value directly targets the space actually available —
+     viewport width minus this section's 15px side padding on each side —
+     rather than a flat vw ratio, since a flat ratio either overflows on
+     narrow phones (where the fixed padding eats a bigger share of the
+     screen) or leaves the text too small on wider ones. With white-space:
+     nowrap forcing "MALIENS" onto one line, going wider than the available
+     space overflows, and centered-text-align doesn't handle that by
+     overflowing evenly — it renders flush left with the overflow spilling
+     off the right edge. */
+  font-size: clamp(2.1rem, calc(13.5vw - 4px), 18rem);
+  line-height: 1;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  max-width: 2200px;
+  min-width: 0;
+  letter-spacing: 0.03em;
+
+  background: linear-gradient(to bottom,
+      #00d4ff 0%,
+      #ffffff 50%);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Each letter of "MALIENS" is wrapped in its own span by
+   nextsectionLogo.js, with a per-letter transition-delay set inline for
+   the stagger — this is what makes it reveal letter by letter. */
+.next-section h2.main-title .letter {
+  display: inline-block;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  opacity: 0;
+  transform: translateY(70px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.next-section h2.main-title.is-revealed .letter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.next-section h2 .sub-title {
+  display: block;
+  margin-top: 1em;
+  font-size: 0.24em;
+  font-weight: 500;
+  letter-spacing: 0.23em;
+  text-transform: uppercase;
+  white-space: normal; /* override the "MALIENS" nowrap it would otherwise inherit */
+
+  /* Same slide-in style as "MALIENS" (opacity + translateY, same easing and
+     duration), just as one whole block (no letter split) with a slight
+     delay so it lags a beat behind. */
+  opacity: 0;
+  transform: translateY(70px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+.next-section h2.main-title.is-revealed .sub-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Placed after the base .sub-title rule above (same selector specificity)
+   so it actually wins the cascade at mobile widths — the inline subtitle
+   overlaps the decorative "MALIENS" rows there, so it's hidden in favor of
+   the standalone .mobile-subtitle-below block, which sits clear of the
+   stack instead. */
+@media (max-width: 500px) {
+  .next-section h2 .sub-title {
+    display: none;
+  }
+}

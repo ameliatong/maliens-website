@@ -1,0 +1,149 @@
+/* ===================== */
+/* CUSTOM CURSOR */
+/* ===================== */
+/* Replaces the system cursor site-wide (see customCursor.js) — a small dot
+   at the exact pointer position plus a larger ring that trails behind it
+   with a slight lag. Both switch from white to purple when they cross onto
+   a light-background element (customCursor.js decides light vs dark). */
+
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.custom-cursor-dot,
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.25s ease, background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+body.has-custom-cursor .custom-cursor-dot,
+body.has-custom-cursor .custom-cursor-ring {
+  opacity: 1;
+}
+
+.custom-cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+}
+
+.custom-cursor-ring {
+  width: 96px;
+  height: 96px;
+  border: 0.75px solid rgba(255, 255, 255, 0.65);
+  transition: opacity 0.25s ease, border-color 0.25s ease,
+    width 0.2s ease, height 0.2s ease;
+}
+
+.custom-cursor-ring.is-active {
+  width: 70px;
+  height: 70px;
+}
+
+.custom-cursor-dot.is-light-bg {
+  background: #043294;
+}
+
+.custom-cursor-ring.is-light-bg {
+  border-color: rgba(4, 50, 148, 0.65);
+}
+
+/* Curved "SCROLL DOWN" idle hint — an SVG overlay kept positioned exactly
+   on top of the plain ring (see customCursor.js for the idle-timing logic
+   and the <textPath> markup). Hidden by default; fades in only once the
+   ring has been idle a couple of seconds, and never while the glass look
+   is active. */
+.custom-cursor-textring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 96px;
+  height: 96px;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.custom-cursor-textring.is-visible {
+  opacity: 1;
+}
+
+.custom-cursor-textring-label {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  fill: #ffffff;
+}
+
+.custom-cursor-textring.is-light-bg .custom-cursor-textring-label {
+  fill: #043294;
+}
+
+/* "Liquid glass" look — only active over the About section (the 3D glass
+   logo). The dot fades out (the sphere reads as one solid cursor, no
+   separate pinpoint needed); the ring balloons into a big glass sphere
+   using the SVG displacement filter customCursor.js injects, chained after
+   a blur/saturate so it reads as frosted glass that also bends whatever's
+   behind it. */
+.custom-cursor-dot.is-glass {
+  opacity: 0;
+}
+
+.custom-cursor-ring.is-glass {
+  width: 200px;
+  height: 200px;
+  border: none;
+
+  /* From the liquid-glass-css generator — the chained
+     url(#cursor-glass-distortion) does the actual lens warp (see the
+     filter customCursor.js injects: three chromatic-aberration passes at a
+     heavy scale), a slight blur on top for a touch of frost, saturate/
+     brightness for a bit of glassy color pop, and the inset box-shadows
+     fake a glass rim: a thin edge line, a small top-left catch-light, and
+     a soft inner glow. No drop shadow — that would lift it off the page
+     like a solid object, not read as glass. No mask, either — distortion
+     is applied at full, uniform strength across the whole circle (was
+     previously faded toward the center for a "depth" look, but a
+     fully-even warp read better). */
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(2px) url(#cursor-glass-distortion) saturate(1.5) brightness(1.1);
+  -webkit-backdrop-filter: blur(4px) saturate(1.8) brightness(1.15) contrast(1.05);
+
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.5),
+    inset 0 0 16px rgba(255, 255, 255, 0.25);
+
+  transition: opacity 0.25s ease, border-color 0.25s ease,
+    width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Touch devices get no custom cursor and keep native tap behavior —
+   customCursor.js skips setup entirely on coarse pointers, this just makes
+   sure nothing is left in a "cursor: none" state if that check ever races
+   with a resize/device-mode change. */
+@media (pointer: coarse) {
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: auto !important;
+  }
+
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none;
+  }
+}

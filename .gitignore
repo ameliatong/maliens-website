@@ -28,3 +28,6 @@ model/
 node_modules/
 dist/
 .vite/
+
+.env
+node_modules/

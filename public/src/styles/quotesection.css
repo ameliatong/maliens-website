@@ -1,0 +1,567 @@
+.quote-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: auto;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Overlaps the seam against .next-section — eliminates a hairline
+     sub-pixel rendering gap between the two sections (both are white here,
+     so the overlap is invisible). */
+  margin-top: -6px;
+
+  /* Same trick against .marquee-section below — both are white/near-white
+     at that edge, so the overlap is invisible but removes the hairline. */
+  margin-bottom: -4px;
+}
+
+/* ===================== */
+/* QUOTE HERO */
+/* ===================== */
+
+.quote-hero {
+  padding-top: clamp(24px, 3vw, 60px);
+}
+
+.quote-label {
+  position: absolute;
+  top: clamp(24px, 4vw, 48px);
+  right: clamp(20px, 4vw, 60px);
+
+  font-family: "Michroma", sans-serif;
+  font-size: clamp(0.6rem, 0.8vw, 0.85rem);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-align: right;
+  color: #1e3aff;
+}
+
+.quote-hero-content {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quote-heading-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: clamp(28px, 4vw, 64px);
+}
+
+.quote-heading-main {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.8rem, 8vw, 7rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+
+  background: linear-gradient(to bottom, #1a0e8c 0%, #3d5bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  opacity: 0;
+  transform: translateX(-120px);
+  will-change: transform, opacity;
+}
+
+.quote-heading-ideas {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: clamp(2.6rem, 7.4vw, 6.6rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+
+  color: #1100ff;
+
+  opacity: 0;
+  transform: translateX(-120px);
+  will-change: transform, opacity;
+}
+
+.quote-cow-group {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 0.8vw, 14px);
+  perspective: 600px;
+
+  max-width: clamp(18px, 2vw, 32px);
+  overflow: hidden;
+  margin: 0;
+  /* leaving: let the cow/brackets fade first, then slide Ideas back smoothly */
+  transition: margin 0.6s ease 0.35s, max-width 0.6s ease 0.35s;
+}
+
+.quote-cow-group.is-revealed {
+  max-width: clamp(120px, 20vw, 300px);
+  margin: 0 clamp(16px, 1.8vw, 32px);
+  /* entering: the gap opens 0.3s after Built/Ideas land (Ideas slides aside) */
+  transition: margin 0.35s ease 0.3s, max-width 0.35s ease 0.3s;
+}
+
+.quote-arrow {
+  font-family: "Silkscreen", sans-serif;
+  font-size: clamp(1rem, 2vw, 2rem);
+  color: #04e4fe;
+
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.quote-cow-group.is-revealed .quote-arrow {
+  opacity: 1;
+  transform: scale(1);
+  /* entering: brackets pop in with the gap, 0.3s after Ideas slides aside */
+  transition: opacity 0.35s ease 0.3s, transform 0.35s ease 0.3s;
+}
+
+.quote-cow {
+  width: clamp(46px, 8vw, 100px);
+  image-rendering: pixelated;
+
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  /* leaving: just fade out (like the brackets), then snap width back to 0 once invisible */
+  transition: opacity 0.35s ease, max-width 0s ease 0.35s, transform 0.6s ease;
+}
+
+.quote-cow-group.is-revealed .quote-cow {
+  max-width: clamp(46px, 8vw, 100px);
+  opacity: 1;
+  /* entering: brackets pop at 0.3s, cow fills in 0.7s after that */
+  transition: max-width 0.5s ease 1s, opacity 0.3s ease 1s, transform 0.6s ease;
+}
+
+.quote-cow-group:hover .quote-cow {
+  animation: quoteCowSpin 1.1s linear infinite;
+}
+
+@keyframes quoteCowSpin {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.quote-subheading-row {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(24px, 5vw, 70px);
+  padding-left: clamp(40px, 12vw, 190px);
+}
+
+.quote-intro-copy {
+  margin: 0;
+  max-width: clamp(180px, 20vw, 300px);
+
+  /* matches .quote-about-copy (font size + line height); purple text */
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #060761;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.quote-intro-copy.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quote-big-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+
+  opacity: 0;
+  transform: translateX(120px);
+}
+
+.quote-big-text span {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+
+  background: linear-gradient(to bottom, #060058 0%, #0C0EC7 55%, #0099FF 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Mobile: everything in this hero stacks and left-aligns instead of the
+   desktop's cramped single-row layout, with bigger type throughout. */
+@media (max-width: 500px) {
+  .quote-hero {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* "We Built" always takes its own full-width line (flex-basis: 100%),
+     while the cow group and "Ideas" wrap together onto the line below and
+     stay side by side with each other. */
+  .quote-heading-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 56px;
+    /* keep the gap to "Don't Just / Live in Feed" close to the gap between
+       "We Built" and the cow / Ideas line */
+    margin-bottom: 18px;
+  }
+
+  .quote-heading-main {
+    flex: 0 0 100%;
+    font-size: 4.3rem;
+    /* The cut reveal clips the gradient on each .vcr-inner span. Drop the
+       element-level gradient clip + will-change here so the parent isn't ALSO
+       a text-clipped, layer-promoted box around transformed children — that
+       combo double-renders the text ("ghost Built") in WebKit/Blink. */
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    -webkit-text-fill-color: currentColor;
+    will-change: auto;
+  }
+
+  .quote-heading-ideas {
+    font-size: 4rem;
+  }
+
+  .quote-cow-group.is-revealed {
+    max-width: 340px;
+  }
+
+  .quote-cow,
+  .quote-cow-group.is-revealed .quote-cow {
+    width: 115px;
+    max-width: 115px;
+  }
+
+  .quote-arrow {
+    font-size: 1.75rem;
+  }
+
+  .quote-subheading-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0;
+    gap: 28px;
+  }
+
+  /* "Don't Just Live in Feed" reads first on mobile, with the intro copy
+     below it — the reverse of the desktop DOM order — via a visual reorder
+     rather than moving the markup, so desktop is untouched. */
+  .quote-big-text {
+    order: -1;
+  }
+
+  .quote-big-text span {
+    font-size: 4.3rem;
+  }
+
+  .quote-intro-copy {
+    max-width: none;
+    /* same size + line height as .quote-about-copy on mobile */
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  /* ---- Vertical cut reveal (JS wraps each word) -------------------------- */
+  /* Wrapper clips; the inner span rides up from below into place. The wrapper's
+     own line-height sets the clip-box height and gives ascenders/descenders
+     room — no negative margins, so a word that wraps to the next line drops
+     cleanly below instead of colliding with the line above. */
+  .quote-heading-main .vcr-word,
+  .quote-heading-ideas .vcr-word,
+  .quote-big-text .vcr-word,
+  .quote-intro-copy .vcr-word,
+  .quote-about-copy .vcr-word,
+  .quote-about-tagline .vcr-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    /* Horizontal breathing room: the headings' compact negative letter-spacing
+       (which also applies after the last glyph) plus italic overhang push ink
+       past the wrapper's content box, and overflow:hidden then shaves the
+       edges. Padding widens the clip box; the matching negative margin cancels
+       it in flow, so the compact spacing is unchanged. */
+    padding-left: 0.2em;
+    padding-right: 0.26em;
+    margin-left: -0.26em;
+    margin-right: -0.26em;
+  }
+
+  /* Clip-box height per element (just enough that the top/bottom clip doesn't
+     shave caps/descenders). */
+  .quote-heading-main .vcr-word,
+  .quote-heading-ideas .vcr-word,
+  .quote-big-text .vcr-word {
+    line-height: 1.3;
+  }
+
+  .quote-intro-copy .vcr-word,
+  .quote-about-copy .vcr-word {
+    line-height: 1.5;
+  }
+
+  .quote-about-tagline .vcr-word {
+    line-height: 1.6;
+  }
+
+  /* Pre-reveal rest state; quoteReveal.js animates each inner up to
+     translateY(0) with the Web Animations API (staggered, once, on scroll-in). */
+  .quote-heading-main .vcr-inner,
+  .quote-heading-ideas .vcr-inner,
+  .quote-big-text .vcr-inner,
+  .quote-intro-copy .vcr-inner,
+  .quote-about-copy .vcr-inner,
+  .quote-about-tagline .vcr-inner {
+    display: inline-block;
+    transform: translateY(110%);
+    /* nudge the glyph off the wrapper's right clip edge (last-letter overhang
+       from the compact negative letter-spacing) */
+    padding-right: 2px;
+  }
+
+  /* The gradient headings clip text to a parent background; a transformed child
+     inside can drop the fill in some engines, so paint the gradient on the
+     moving span itself. Each is a single line on mobile, so a per-word gradient
+     reads the same as the whole line. */
+  .quote-heading-main .vcr-inner {
+    background: linear-gradient(to bottom, #1a0e8c 0%, #3d5bff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .quote-big-text .vcr-inner {
+    background: linear-gradient(to bottom, #060058 0%, #0c0ec7 55%, #0099ff 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ---- Cow + arrows reveal ---------------------------------------------- */
+  /* The group widens open (this is what shoves "Ideas" to the right) and the
+     cow/arrows fade in. quoteReveal.js decides WHEN. The whole thing settles by
+     ~1s so "Ideas" stops sliding right about when the cow has appeared, instead
+     of creeping on afterwards. */
+  .quote-cow-group.is-revealed {
+    transition:
+      margin 0.8s ease,
+      max-width 0.8s ease;
+  }
+
+  .quote-cow-group.is-revealed .quote-arrow {
+    transition:
+      opacity 0.4s ease 0.1s,
+      transform 0.55s ease 0.1s;
+  }
+
+  .quote-cow-group.is-revealed .quote-cow {
+    transition: opacity 0.5s ease 0.25s;
+  }
+}
+
+/* ===================== */
+/* GRAVITY PILLS */
+/* ===================== */
+
+.gravity-section {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  margin: clamp(150px, 20vh, 260px) 0 0;
+  overflow: hidden;
+
+  /* Old-TV power-on: collapsed to a thin horizontal line, then clipped
+     open from the center once the section scrolls 30% into view. */
+  clip-path: inset(50% 0% 50% 0%);
+  transition: clip-path 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 500px) {
+  .gravity-section {
+    margin-top: 50px;
+    height: 400px;
+  }
+}
+
+.gravity-section.is-revealed {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.gravity-bg-layer {
+  position: absolute;
+  top: -215%;
+  left: 0;
+  width: 100%;
+  height: 530%;
+  z-index: 0;
+
+  background-image: url("../../image/Gravity_bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+
+.gravity-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  padding: 20px 44px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  background: rgba(20, 40, 120, 0.35);
+  backdrop-filter: blur(4px);
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2.2vw, 1.9rem);
+  color: #ffffff;
+  white-space: nowrap;
+
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+}
+
+.gravity-pill:active {
+  cursor: grabbing;
+}
+
+.gravity-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  width: clamp(70px, 8.5vw, 140px);
+  height: auto;
+
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.gravity-img:active {
+  cursor: grabbing;
+}
+
+.gravity-img.gravity-pixel {
+  width: clamp(52px, 6.5vw, 110px);
+}
+
+.gravity-img.gravity-star-small {
+  width: clamp(36px, 4.5vw, 76px);
+}
+
+/* ===================== */
+/* QUOTE ABOUT */
+/* ===================== */
+
+.quote-about {
+  width: 100%;
+  margin-top: 0;
+}
+
+.quote-about-content {
+  display: flex;
+  align-items: flex-end;
+  width: 60%;
+  margin-left: 28%;
+  margin-bottom: 160px;
+}
+
+/* The green tail always hangs from the bottom edge of the gravity section —
+   top-aligned to the content box (which sits flush under .gravity-section),
+   independent of how tall the text column is. */
+.quote-about-tail {
+  align-self: flex-start;
+}
+
+.quote-about-tail img {
+  width: clamp(50px, 17vw, 160px);
+  display: block;
+}
+
+.quote-about-text {
+  margin-top: 0;
+}
+
+.quote-about-copy {
+  margin: 0;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1rem, 1.5vw, 2rem);
+  line-height: 1.7;
+  color: #060761;
+}
+
+.quote-about-copy strong {
+  font-family: "Silkscreen", monospace;
+  font-size: 1.1em;
+  color: #1e3aff;
+}
+
+.quote-about-tagline {
+  margin: 0;
+
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.8rem);
+  color: #1a2fff;
+}
+
+@media (max-width: 500px) {
+  /* Drop the desktop's 28% left margin / 60% width so the block uses the full
+     column, with bigger copy and a larger green tail (closer to the desktop
+     proportions). */
+  .quote-about-content {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 100px;
+    padding: 0 20px;
+    gap: 12px;
+  }
+
+  .quote-about-tail img {
+    width: 104px;
+  }
+
+  .quote-about-copy {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .quote-about-tagline {
+    font-size: 1.15rem;
+  }
+}
