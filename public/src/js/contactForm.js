@@ -9,7 +9,7 @@ const API_BASE =
   window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1"
     ? ""
-    : "https://REPLACE-WITH-YOUR-RENDER-URL.onrender.com";
+    : "https://maliens-backend.onrender.com";
 
 export function initContactForm() {
   const form = document.getElementById("contactForm");
