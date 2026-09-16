@@ -3,6 +3,7 @@ import { GLTFLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/GL
 import { DRACOLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/DRACOLoader.js";
 import { OrbitControls } from "https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js";
 import { sharedLoadingManager } from "./loadingManager.js";
+import { disposeObject3DGPUResources } from "./gpuDispose.js";
 
 export function initServicesScene() {
   // Mobile breakpoint matching the rest of the site (services.css) — below
@@ -1663,6 +1664,14 @@ export function initServicesScene() {
     resetToDefaultView();
   }
 
+  // Same reasoning as heroScene.js's equivalent: skipping the render while
+  // off-screen already saves CPU/GPU time each frame, but the model's
+  // geometry/textures stay resident in GPU memory regardless — freeing them
+  // once fully off-screen matters on mobile, where this scene's memory adds
+  // to the hero and logo scenes' own. three.js re-uploads automatically the
+  // next time this scene actually renders, so no reload is needed.
+  let wasServicesOnScreen = false;
+
   function animate() {
     requestAnimationFrame(animate);
 
@@ -1673,7 +1682,14 @@ export function initServicesScene() {
 
     controls.update();
 
-    if (isServicesOnScreen()) {
+    const onScreen = isServicesOnScreen();
+
+    if (!onScreen && wasServicesOnScreen && model) {
+      disposeObject3DGPUResources(model);
+    }
+    wasServicesOnScreen = onScreen;
+
+    if (onScreen) {
       renderer.render(scene, camera);
     }
   }

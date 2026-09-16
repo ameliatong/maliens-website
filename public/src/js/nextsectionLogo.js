@@ -2,6 +2,7 @@ import * as THREE from "https://esm.sh/three@0.160.0";
 import { GLTFLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/DRACOLoader.js";
 import { sharedLoadingManager } from "./loadingManager.js";
+import { disposeObject3DGPUResources } from "./gpuDispose.js";
 
 // Gradient "sky" used only as an environment map for the glass logo to
 // reflect/refract — a blue-to-cyan sweep from -X to +X so the color visibly
@@ -557,6 +558,13 @@ export function initNextScene() {
     return rect.bottom > 0 && rect.top < window.innerHeight;
   }
 
+  // Same reasoning as heroScene.js/servicesScene.js's equivalents: skipping
+  // the render while off-screen already saves CPU/GPU time each frame, but
+  // the model's geometry/env-map textures stay resident in GPU memory
+  // regardless — freeing them once fully off-screen matters on mobile. three.js
+  // re-uploads automatically the next time this scene actually renders.
+  let wasNextSectionOnScreen = false;
+
   // Animate
   function animate() {
 
@@ -599,7 +607,14 @@ export function initNextScene() {
       }
     }
 
-    if (isNextSectionOnScreen()) {
+    const onScreen = isNextSectionOnScreen();
+
+    if (!onScreen && wasNextSectionOnScreen && logoModel) {
+      disposeObject3DGPUResources(logoModel);
+    }
+    wasNextSectionOnScreen = onScreen;
+
+    if (onScreen) {
       renderer.render(
         scene,
         camera

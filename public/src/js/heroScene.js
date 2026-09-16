@@ -4,6 +4,7 @@ import { DRACOLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/D
 import { OrbitControls } from "https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js";
 import { gsap } from "https://esm.sh/gsap@3.13.0";
 import { sharedLoadingManager } from "./loadingManager.js";
+import { disposeObject3DGPUResources } from "./gpuDispose.js";
 
 export function initHeroScene() {
   // =====================
@@ -2224,10 +2225,24 @@ export function initHeroScene() {
     return isInside && virtualScroll >= window.innerHeight;
   }
 
+  // Skipping the render/redraw while covered (above) saves CPU/GPU time
+  // each frame, but the model's geometry and textures stay resident in GPU
+  // memory the whole time regardless — on mobile, with two more full scenes
+  // (logo + services) doing the same thing, that adds up to real crashes.
+  // Disposing GPU-side buffers once fully covered frees that memory; three.js
+  // re-uploads them automatically the moment this scene is rendered again,
+  // so nothing needs to be reloaded when scrolling back.
+  let wasHeroCovered = false;
+
   function animate() {
     requestAnimationFrame(animate);
 
     const hidden = isHeroCovered();
+
+    if (hidden && !wasHeroCovered && model) {
+      disposeObject3DGPUResources(model);
+    }
+    wasHeroCovered = hidden;
 
     const delta = clock.getDelta();
     if (mixer) mixer.update(delta);
