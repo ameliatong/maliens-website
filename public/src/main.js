@@ -3,7 +3,7 @@ import { initBreakpointReload } from "./js/breakpointReload.js";
 import { initCustomCursor } from "./js/customCursor.js";
 import { initHeroScene } from "./js/heroScene.js?v=5";
 import { initHeader } from "./js/header.js";
-import { initNextScene } from "./js/nextsectionLogo.js?v=2";
+import { initNextScene } from "./js/nextsectionLogo.js?v=3";
 import { initQuoteReveal } from "./js/quoteReveal.js";
 import { initGravitySection } from "./js/gravitySection.js";
 import { initContactForm } from "./js/contactForm.js?v=2";

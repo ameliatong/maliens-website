@@ -473,6 +473,13 @@ export function initNextScene() {
       // shift visibly as the logo rotates.
       logoModel.traverse((child) => {
         if (child.isMesh) {
+          // The recompressed model's normals come out flat/degenerate,
+          // which breaks this glass material's transmission/refraction
+          // (renders as near-invisible except at sharp edges — looks like
+          // a bare wireframe). Recomputing smooth normals from the
+          // geometry's actual topology fixes it.
+          child.geometry.computeVertexNormals();
+
           child.material = new THREE.MeshPhysicalMaterial({
             color: 0x8ec9ff,
             transmission: 1,
