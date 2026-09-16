@@ -1,7 +1,7 @@
 import { initLoadingScreen } from "./js/loadingScreen.js";
 import { initBreakpointReload } from "./js/breakpointReload.js";
 import { initCustomCursor } from "./js/customCursor.js";
-import { initHeroScene } from "./js/heroScene.js?v=3";
+import { initHeroScene } from "./js/heroScene.js?v=4";
 import { initHeader } from "./js/header.js";
 import { initNextScene } from "./js/nextsectionLogo.js";
 import { initQuoteReveal } from "./js/quoteReveal.js";
