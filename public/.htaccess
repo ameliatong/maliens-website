@@ -1,0 +1,9 @@
+# Serve .glb (3D model) files with the correct binary MIME type — without
+# this, some servers default to "text/plain", which can make a reverse
+# proxy/CDN try to gzip-compress an already-binary file and corrupt or
+# break the transfer for large files.
+AddType model/gltf-binary .glb
+
+<IfModule mod_deflate.c>
+  SetEnvIfNoCase Request_URI \.glb$ no-gzip dont-vary
+</IfModule>
