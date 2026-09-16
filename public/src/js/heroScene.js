@@ -1320,9 +1320,14 @@ export function initHeroScene() {
 
       const gameTexture = new THREE.CanvasTexture(gameCanvas);
       gameTexture.colorSpace = THREE.SRGBColorSpace;
-      gameTexture.flipY = false;
+      gameTexture.flipY = true;
       gameTexture.minFilter = THREE.NearestFilter;
       gameTexture.magFilter = THREE.NearestFilter;
+      // The recompressed model's "screen" mesh UVs come out horizontally
+      // mirrored — mirror the texture back to compensate.
+      gameTexture.wrapS = THREE.RepeatWrapping;
+      gameTexture.repeat.x = -1;
+      gameTexture.offset.x = 1;
 
       const gameAssets = {
         bg: new Image(),
