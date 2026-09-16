@@ -54,17 +54,6 @@ export function initContactForm() {
     const submitButton = form.querySelector("button[type='submit']");
     const formData = new FormData(form);
 
-    const token = formData.get("cf-turnstile-response");
-
-    // =====================
-    // TURNSTILE CHECK
-    // =====================
-
-    if (!token) {
-      showStatus("Please verify that you're human.", "before");
-      return;
-    }
-
     // =====================
     // FORM DATA
     // =====================
@@ -73,7 +62,6 @@ export function initContactForm() {
       name: formData.get("name")?.trim(),
       email: formData.get("email")?.trim(),
       message: formData.get("message")?.trim(),
-      turnstileToken: token,
     };
 
     try {
@@ -106,10 +94,6 @@ export function initContactForm() {
       showStatus("Message sent. We’ll get back to you soon.", "after");
 
       form.reset();
-
-      if (window.turnstile) {
-        window.turnstile.reset();
-      }
     } catch (error) {
       // =====================
       // ERROR

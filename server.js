@@ -36,9 +36,9 @@ function isValidEmail(email) {
 
 app.post("/api/contact", contactLimiter, async (req, res) => {
   try {
-    const { name, email, message, turnstileToken } = req.body;
+    const { name, email, message } = req.body;
 
-    if (!name || !email || !message || !turnstileToken) {
+    if (!name || !email || !message) {
       return res.status(400).json({
         message: "Please fill in all fields.",
       });
@@ -53,28 +53,6 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
     if (name.length > 100 || email.length > 150 || message.length > 2000) {
       return res.status(400).json({
         message: "Your message is too long.",
-      });
-    }
-
-    const verifyResponse = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          secret: process.env.TURNSTILE_SECRET_KEY,
-          response: turnstileToken,
-        }),
-      },
-    );
-
-    const verifyResult = await verifyResponse.json();
-
-    if (!verifyResult.success) {
-      return res.status(403).json({
-        message: "Human verification failed.",
       });
     }
 

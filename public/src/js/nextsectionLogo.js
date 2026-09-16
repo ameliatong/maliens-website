@@ -1,5 +1,6 @@
 import * as THREE from "https://esm.sh/three@0.160.0";
 import { GLTFLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/DRACOLoader.js";
 import { sharedLoadingManager } from "./loadingManager.js";
 
 // Gradient "sky" used only as an environment map for the glass logo to
@@ -421,7 +422,13 @@ export function initNextScene() {
   canvas.addEventListener("touchend", endTouchRotate);
   canvas.addEventListener("touchcancel", endTouchRotate);
 
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath(
+    "https://www.gstatic.com/draco/versioned/decoders/1.5.6/",
+  );
+
   const loader = new GLTFLoader(sharedLoadingManager);
+  loader.setDRACOLoader(dracoLoader);
 
   loader.load(
     "model/logo_nextsection.glb",

@@ -1,12 +1,12 @@
 import { initLoadingScreen } from "./js/loadingScreen.js";
 import { initBreakpointReload } from "./js/breakpointReload.js";
 import { initCustomCursor } from "./js/customCursor.js";
-import { initHeroScene } from "./js/heroScene.js?v=4";
+import { initHeroScene } from "./js/heroScene.js?v=5";
 import { initHeader } from "./js/header.js";
-import { initNextScene } from "./js/nextsectionLogo.js";
+import { initNextScene } from "./js/nextsectionLogo.js?v=2";
 import { initQuoteReveal } from "./js/quoteReveal.js";
 import { initGravitySection } from "./js/gravitySection.js";
-import { initContactForm } from "./js/contactForm.js";
+import { initContactForm } from "./js/contactForm.js?v=2";
 import { initServicesScene } from "./js/servicesScene.js?v=4";
 
 // Attach the loading-screen listeners before any scene starts loading

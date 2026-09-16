@@ -1320,14 +1320,9 @@ export function initHeroScene() {
 
       const gameTexture = new THREE.CanvasTexture(gameCanvas);
       gameTexture.colorSpace = THREE.SRGBColorSpace;
-      gameTexture.flipY = true;
+      gameTexture.flipY = false;
       gameTexture.minFilter = THREE.NearestFilter;
       gameTexture.magFilter = THREE.NearestFilter;
-      // The recompressed model's "screen" mesh UVs come out horizontally
-      // mirrored — mirror the texture back to compensate.
-      gameTexture.wrapS = THREE.RepeatWrapping;
-      gameTexture.repeat.x = -1;
-      gameTexture.offset.x = 1;
 
       const gameAssets = {
         bg: new Image(),
@@ -1848,6 +1843,43 @@ export function initHeroScene() {
         if (!child.isMesh) return;
 
         if (child.name === "screen") {
+          // The recompressed model's "screen" mesh is curved, and its UVs
+          // come out horizontally mirrored — a texture-level flip
+          // (repeat.x = -1) only looks right from some angles because the
+          // mirroring isn't uniform across the curved surface. Flipping
+          // the mesh's actual UV data fixes it consistently everywhere.
+          // The recompressed model's UV chart for this curved screen is
+          // inconsistent (some regions read correctly, others come out
+          // mirrored) — a uniform flip/rotate on the existing UVs can't
+          // fix a per-region inconsistency. Discarding it and computing a
+          // fresh, uniform planar projection from the mesh's own local X/Y
+          // extents guarantees one consistent mapping across the whole
+          // surface.
+          const posAttr = child.geometry.attributes.position;
+          const uvAttr = child.geometry.attributes.uv;
+          if (posAttr && uvAttr) {
+            let minX = Infinity;
+            let maxX = -Infinity;
+            let minZ = Infinity;
+            let maxZ = -Infinity;
+            for (let i = 0; i < posAttr.count; i++) {
+              const x = posAttr.getX(i);
+              const z = posAttr.getZ(i);
+              if (x < minX) minX = x;
+              if (x > maxX) maxX = x;
+              if (z < minZ) minZ = z;
+              if (z > maxZ) maxZ = z;
+            }
+            const spanX = maxX - minX || 1;
+            const spanZ = maxZ - minZ || 1;
+            for (let i = 0; i < posAttr.count; i++) {
+              const u = 1 - (posAttr.getX(i) - minX) / spanX;
+              const v = 1 - (posAttr.getZ(i) - minZ) / spanZ;
+              uvAttr.setXY(i, u, v);
+            }
+            uvAttr.needsUpdate = true;
+          }
+
           child.material = new THREE.MeshBasicMaterial({
             map: gameTexture,
             color: new THREE.Color(1, 1, 1),
